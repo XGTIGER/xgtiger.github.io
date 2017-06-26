@@ -65,17 +65,21 @@
 </pre></div>
 
 
-<p>先介绍下几个重要的ansible playbook的任务执行结果状态：
-<em> changed： 操作成功，且对操作目标做出了修改
-</em> failed：  操作未成功。
-* skipped ：未执行该任务，因为状态已一致或根据条件设定而需要跳过。</p>
-<p>对以上的playbook进行一下注解：
-<em> hosts：目标主机（组），来自inventory，可以是组名、正则模式、单个IP、单个主机名等，这里是主机组名。
-</em> vars: 即变量的定义，这里变量是针对该play的。变量可以被引用，这里实际在模板httpd.j2中被引用，下面的测试demo将展示如何使用变量。
-<em> remote_user： 连接到ssh-server的系统用户，这里使用root
-</em> tasks： 定义任务部分，可以有任意多个“task”，每个task完成一个动作，可以是安装完成某些软件、重启某个服务、修改某个文件等等。
-        这里的template/service均为所使用功能模块的名子，这与使用ansible命令行时，功能完全一致，详细的用法，还是<strong>ansible-doc -l</strong>来查看。比如service: name=xx state=xx,这里的name/state均是service模块所使用的参数。
-* notify/handler： 在task中可以出现notify关键字，它表示本task（这里指修改配置文件 ）结果是changed时，发出这个通知，通知的结果就是，之后定义的handler作出相应的动作，这里当配置有修改时，将会重启apache服务</p>
+<p>先介绍下几个重要的ansible playbook的任务执行结果状态：</p>
+<ul>
+<li>changed： 操作成功，且对操作目标做出了修改</li>
+<li>failed：  操作未成功。</li>
+<li>skipped ：未执行该任务，因为状态已一致或根据条件设定而需要跳过。</li>
+</ul>
+<p>对以上的playbook进行一下注解：</p>
+<ul>
+<li>hosts：目标主机（组），来自inventory，可以是组名、正则模式、单个IP、单个主机名等，这里是主机组名。</li>
+<li>vars: 即变量的定义，这里变量是针对该play的。变量可以被引用，这里实际在模板httpd.j2中被引用，下面的测试demo将展示如何使用变量。</li>
+<li>remote_user： 连接到ssh-server的系统用户，这里使用root</li>
+<li>tasks： 定义任务部分，可以有任意多个“task”，每个task完成一个动作，可以是安装完成某些软件、重启某个服务、修改某个文件等等。
+        这里的template/service均为所使用功能模块的名子，这与使用ansible命令行时，功能完全一致，详细的用法，还是<strong>ansible-doc -l</strong>来查看。比如service: name=xx state=xx,这里的name/state均是service模块所使用的参数。</li>
+<li>notify/handler： 在task中可以出现notify关键字，它表示本task（这里指修改配置文件 ）结果是changed时，发出这个通知，通知的结果就是，之后定义的handler作出相应的动作，这里当配置有修改时，将会重启apache服务</li>
+</ul>
 <p>可以使用ansilbe-playbook 命令执行这个playbook:</p>
 <div class="highlight"><pre><span></span>ansible-playbook -i host.ivt  modify_apache_config.yml 
 </pre></div>
@@ -121,11 +125,13 @@
 </pre></div>
 
 
-<p>这个例子，出现了两个新的关键字：
-<em> tags：就是标签，可以在ansible-playbook命令中使用--tags 来指定仅执行哪些任务
-</em> with_items: 最常用的循环处理结构，类似for循环，但通常来说，module都有优化，即不会多次发起ssh连接，而是批量处理，比如yum.
+<p>这个例子，出现了两个新的关键字：</p>
+<ul>
+<li>tags：就是标签，可以在ansible-playbook命令中使用--tags 来指定仅执行哪些任务</li>
+<li>with_items: 最常用的循环处理结构，类似for循环，但通常来说，module都有优化，即不会多次发起ssh连接，而是批量处理，比如yum.
         item 即是当前的变量内容。
-这里涉及了变量的使用：在ansible playbook中，变量应该严格以"{{var}}"(双引号）的形式来使用。</p>
+这里涉及了变量的使用：在ansible playbook中，变量应该严格以"{{var}}"(双引号）的形式来使用。</li>
+</ul>
 <p>playbook的初体验就暂且先到这里。</p>
         </div><!-- /.entry-content -->
 

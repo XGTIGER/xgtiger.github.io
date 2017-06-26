@@ -42,8 +42,10 @@
         </address>
 <p>In <a href="/category/ansible.html">Ansible</a>. </p>
 </p>
-</footer><!-- /.post-info -->        <p>Ansible提供了多种遍历操作功能,包括对特定文件等操作
-* with_items标准循环</p>
+</footer><!-- /.post-info -->        <p>Ansible提供了多种遍历操作功能,包括对特定文件等操作</p>
+<ul>
+<li>with_items标准循环</li>
+</ul>
 <div class="highlight"><pre><span></span><span class="x">- name: add several users</span>
 <span class="x">  user: name=</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x"> state=present groups=wheel</span>
 <span class="x">  with_items:</span>

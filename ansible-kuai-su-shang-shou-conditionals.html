@@ -42,8 +42,10 @@
         </address>
 <p>In <a href="/category/ansible.html">Ansible</a>. </p>
 </p>
-</footer><!-- /.post-info -->        <p>条件关键字,极大地加强了逻辑严谨性，并且提升了功能的健壮性
-* when: 只有条件为真时该task才会执行</p>
+</footer><!-- /.post-info -->        <p>条件关键字,极大地加强了逻辑严谨性，并且提升了功能的健壮性</p>
+<ul>
+<li>when: 只有条件为真时该task才会执行</li>
+</ul>
 <div class="highlight"><pre><span></span><span class="x">tasks:</span>
 <span class="x">    - shell: echo &quot;I&#39;ve got &#39;</span><span class="cp">{{</span> <span class="nv">foo</span> <span class="cp">}}</span><span class="x">&#39; and am not afraid to use it!&quot;</span>
 <span class="x">      when: foo is defined</span>

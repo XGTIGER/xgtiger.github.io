@@ -579,8 +579,10 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
         </address>
 <p>In <a href="/category/ansible.html">Ansible</a>. </p>
 </p>
-</footer><!-- /.post-info -->                <p>Ansible提供了多种遍历操作功能,包括对特定文件等操作
-* with_items标准循环</p>
+</footer><!-- /.post-info -->                <p>Ansible提供了多种遍历操作功能,包括对特定文件等操作</p>
+<ul>
+<li>with_items标准循环</li>
+</ul>
 <div class="highlight"><pre><span></span><span class="x">- name: add several users</span>
 <span class="x">  user: name=</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x"> state=present groups=wheel</span>
 <span class="x">  with_items:</span>
@@ -636,8 +638,10 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
         </address>
 <p>In <a href="/category/ansible.html">Ansible</a>. </p>
 </p>
-</footer><!-- /.post-info -->                <p>prompt关键字能够实现交互式动态提供变量给playbook
-* 常规用法 </p>
+</footer><!-- /.post-info -->                <p>prompt关键字能够实现交互式动态提供变量给playbook</p>
+<ul>
+<li>常规用法 </li>
+</ul>
 <div class="highlight"><pre><span></span>---
 - hosts: all
   remote_user: root
@@ -749,8 +753,10 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
         </address>
 <p>In <a href="/category/ansible.html">Ansible</a>. </p>
 </p>
-</footer><!-- /.post-info -->                <p>条件关键字,极大地加强了逻辑严谨性，并且提升了功能的健壮性
-* when: 只有条件为真时该task才会执行</p>
+</footer><!-- /.post-info -->                <p>条件关键字,极大地加强了逻辑严谨性，并且提升了功能的健壮性</p>
+<ul>
+<li>when: 只有条件为真时该task才会执行</li>
+</ul>
 <div class="highlight"><pre><span></span><span class="x">tasks:</span>
 <span class="x">    - shell: echo &quot;I&#39;ve got &#39;</span><span class="cp">{{</span> <span class="nv">foo</span> <span class="cp">}}</span><span class="x">&#39; and am not afraid to use it!&quot;</span>
 <span class="x">      when: foo is defined</span>
@@ -979,10 +985,12 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
 <p>In <a href="/category/ansible.html">Ansible</a>. </p>
 </p>
 </footer><!-- /.post-info -->                <h3>简介</h3>
-<p>ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点：
-<em>  <strong>agentless</strong>模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。
-</em> 幂等性：不会重复执行相同的指令。例如不会重复安装软件
-* 期望状态：只需要告诉被监控端的期望状态。</p>
+<p>ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点：</p>
+<ul>
+<li><strong>agentless</strong>模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。</li>
+<li>幂等性：不会重复执行相同的指令。例如不会重复安装软件</li>
+<li>期望状态：只需要告诉被监控端的期望状态。</li>
+</ul>
 <h3>安装</h3>
 <p><code>pip install ansible</code></p>
 <h3>定义Host Inventory（主机清单）</h3>
