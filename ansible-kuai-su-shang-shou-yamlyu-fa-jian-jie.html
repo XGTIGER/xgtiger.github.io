@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>ansible 快速上手--yaml语法简介</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+        <link href="/" type="application/atom+xml" rel="alternate" title="XGTIGER's Notes ATOM Feed" />
+
+
+        <!--[if IE]>
+                <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+        <!--[if lte IE 7]>
+                <link rel="stylesheet" type="text/css" media="all" href="/css/ie.css"/>
+                <script src="/js/IE8.js" type="text/javascript"></script><![endif]-->
+
+        <!--[if lt IE 7]>
+                <link rel="stylesheet" type="text/css" media="all" href="/css/ie6.css"/><![endif]-->
+
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="">XGTIGER's Notes </a></h1>
+                <nav><ul>
+                    <li ><a href="/category/ansible.html">Ansible</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+<section id="content" class="body">    
+<article>
+        <header> <h1 class="entry-title"><a href="ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html"
+        rel="bookmark" title="Permalink to ansible 快速上手--yaml语法简介">ansible 快速上手--yaml语法简介</a></h1>   </header>
+        <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-11-28T14:20:00+08:00">
+                五 28 十一月 2014
+        </abbr>
+
+        <address class="vcard author">
+                By <a class="url fn" href="/author/wyk.html">wyk</a>
+        </address>
+<p>In <a href="/category/ansible.html">Ansible</a>. </p>
+</p>
+</footer><!-- /.post-info -->        <p>假定您有某种编程语言的基础或至少了解数组、HASH结构。
+yaml类似python语言，有严格的缩进要求，一般是两个空格作为缩进比例。</p>
+<h2>列表和字典</h2>
+<p>列表的所有元素均使用“-”打头例如:</p>
+<div class="highlight"><pre><span></span>- Apple 
+- Orange 
+- Strawberry 
+- Mango
+</pre></div>
+
+
+<p>字典通过key与valuef进行标识例如 :</p>
+<div class="highlight"><pre><span></span><span class="n">name</span><span class="o">:</span> <span class="n">Example</span> <span class="n">Developer</span> 
+<span class="n">job</span><span class="o">:</span> <span class="n">Developer</span> 
+<span class="n">skill</span><span class="o">:</span> <span class="n">Elite</span> 
+</pre></div>
+
+
+<p>或</p>
+<div class="highlight"><pre><span></span>{name: Example Developer, job: Developer, skill: Elite}  
+</pre></div>
+
+
+<h2>ymal中的变量</h2>
+<p>在 yaml 中可以使用vars关键字来定义变量 ：</p>
+<div class="highlight"><pre><span></span><span class="n">vars</span><span class="o">:</span> 
+<span class="n">var_name</span><span class="o">:</span> <span class="n">value</span>  
+</pre></div>
+
+
+<p>变量的引用 :</p>
+<div class="highlight"><pre><span></span><span class="x">- name: add several users </span>
+<span class="x">vars: </span>
+<span class="x">user1: testuser1 </span>
+<span class="x">user2: testuser2 </span>
+<span class="x">user: name=</span><span class="cp">{{</span> <span class="nv">user1</span> <span class="cp">}}</span><span class="x"> state=present groups=wheel</span>
+<span class="x">user: name=</span><span class="cp">{{</span> <span class="nv">user2</span> <span class="cp">}}</span><span class="x"> state=present groups=wheel</span>
+</pre></div>
+
+
+<p>使用迭代方式 :</p>
+<ul>
+<li>with_nested</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">- name: give users access to multiple databases</span>
+<span class="x">  mysql_user: name=</span><span class="cp">{{</span> <span class="nv">item</span><span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="cp">}}</span><span class="x"> priv=</span><span class="cp">{{</span> <span class="nv">item</span><span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="cp">}}</span><span class="x">.*:ALL append_privs=yes password=foo</span>
+<span class="x">  with_nested:</span>
+<span class="x">    - [ &#39;alice&#39;, &#39;bob&#39; ]</span>
+<span class="x">    - [ &#39;clientdb&#39;, &#39;employeedb&#39;, &#39;providerdb&#39; ]</span>
+</pre></div>
+
+
+<ul>
+<li>with_items</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">- name: add several users </span>
+<span class="x">  user: name=</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x"> state=present groups=wheel</span>
+<span class="x">  with_items:  </span>
+<span class="x">    - testuser1  </span>
+<span class="x">    - testuser2 </span>
+</pre></div>
+
+
+<p>事实上with_items中可以使用元素还可为hashes例如 :</p>
+<div class="highlight"><pre><span></span><span class="x">- name: add several users </span>
+<span class="x">  user: name=</span><span class="cp">{{</span> <span class="nv">item.name</span> <span class="cp">}}</span><span class="x"> state=present groups=</span><span class="cp">{{</span> <span class="nv">item.groups</span> <span class="cp">}}</span><span class="x"> </span>
+<span class="x">  with_items: </span>
+<span class="x">    - { name: &#39;testuser1&#39;, groups: &#39;wheel&#39; } </span>
+<span class="x">    - { name: &#39;testuser2&#39;, groups: &#39;root&#39; } </span>
+</pre></div>
+
+
+<ul>
+<li>hash</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="n">users</span><span class="o">:</span>
+  <span class="n">alice</span><span class="o">:</span>
+    <span class="n">name</span><span class="o">:</span> <span class="n">Alice</span> <span class="n">Appleworth</span>
+    <span class="n">telephone</span><span class="o">:</span> <span class="mi">123</span><span class="o">-</span><span class="mi">456</span><span class="o">-</span><span class="mi">7890</span>
+  <span class="n">bob</span><span class="o">:</span>
+    <span class="n">name</span><span class="o">:</span> <span class="n">Bob</span> <span class="n">Bananarama</span>
+    <span class="n">telephone</span><span class="o">:</span> <span class="mi">987</span><span class="o">-</span><span class="mi">654</span><span class="o">-</span><span class="mi">3210</span>
+
+<span class="n">tasks</span><span class="o">:</span>
+  <span class="o">-</span> <span class="n">name</span><span class="o">:</span> <span class="n">Print</span> <span class="n">phone</span> <span class="n">records</span>
+    <span class="n">debug</span><span class="o">:</span> <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;User {{ item.key }} is {{ item.value.name }} ({{ item.value.telephone }})&quot;</span>
+    <span class="n">with_dict</span><span class="o">:</span> <span class="n">users</span>
+</pre></div>
+
+
+<ul>
+<li>Looping over Fileglobs</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">- hosts: all</span>
+
+<span class="x">  tasks:</span>
+
+<span class="x">    # first ensure our target directory exists</span>
+<span class="x">    - file: dest=/etc/fooapp state=directory</span>
+
+<span class="x">    # copy each file over that matches the given pattern</span>
+<span class="x">    - copy: src=</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x"> dest=/etc/fooapp/ owner=root mode=600</span>
+<span class="x">      with_fileglob:</span>
+<span class="x">        - /playbooks/files/fooapp/*</span>
+</pre></div>
+        </div><!-- /.entry-content -->
+
+</article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="/" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>, which takes great advantages of <a href="http://python.org">python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://smashingmagazine.com">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>XGTIGER's Notes - Authors</title>
+        <title>ansible 快速上手--Prompts</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
         <link href="/" type="application/atom+xml" rel="alternate" title="XGTIGER's Notes ATOM Feed" />
@@ -26,10 +26,83 @@
                     <li ><a href="/category/ansible.html">Ansible</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-    <h1>Authors on XGTIGER's Notes</h1>
+        
+<section id="content" class="body">    
+<article>
+        <header> <h1 class="entry-title"><a href="ansible-kuai-su-shang-shou-prompts.html"
+        rel="bookmark" title="Permalink to ansible 快速上手--Prompts">ansible 快速上手--Prompts</a></h1>   </header>
+        <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-04-03T15:59:00+08:00">
+                五 03 四月 2015
+        </abbr>
 
-    <ul>        <li><a href="/author/wyk.html">wyk</a> (10)</li>
-    </ul>
+        <address class="vcard author">
+                By <a class="url fn" href="/author/wyk.html">wyk</a>
+        </address>
+<p>In <a href="/category/ansible.html">Ansible</a>. </p>
+</p>
+</footer><!-- /.post-info -->        <p>prompt关键字能够实现交互式动态提供变量给playbook
+* 常规用法 </p>
+<div class="highlight"><pre><span></span>---
+- hosts: all
+  remote_user: root
+
+  vars:
+    from: &quot;camelot&quot;
+
+  vars_prompt:
+    - name: &quot;name&quot;
+      prompt: &quot;what is your name?&quot;
+    - name: &quot;quest&quot;
+      prompt: &quot;what is your quest?&quot;
+    - name: &quot;favcolor&quot;
+      prompt: &quot;what is your favorite color?&quot;
+</pre></div>
+
+
+<ul>
+<li>使用 default:</li>
+</ul>
+<div class="highlight"><pre><span></span>vars_prompt:
+
+  - name: &quot;release_version&quot;
+    prompt: &quot;Product release version&quot;
+    default: &quot;1.0&quot;
+</pre></div>
+
+
+<ul>
+<li>use private</li>
+</ul>
+<div class="highlight"><pre><span></span>vars_prompt:
+
+  - name: &quot;some_password&quot;
+    prompt: &quot;Enter password&quot;
+    private: yes
+
+  - name: &quot;release_version&quot;
+    prompt: &quot;Product release version&quot;
+    private: no
+</pre></div>
+
+
+<ul>
+<li>If Passlib is installed, vars_prompt can also crypt the entered value so you can use it, for instance, with the user module to define a password,You can use any crypt scheme supported by ‘Passlib’:</li>
+</ul>
+<div class="highlight"><pre><span></span>vars_prompt:
+
+  - name: &quot;my_password2&quot;
+    prompt: &quot;Enter password2&quot;
+    private: yes
+    encrypt: &quot;sha512_crypt&quot;
+    confirm: yes
+    salt_size: 7
+</pre></div>
+        </div><!-- /.entry-content -->
+
+</article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>
