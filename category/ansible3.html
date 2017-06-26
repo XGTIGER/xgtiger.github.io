@@ -121,9 +121,17 @@
 </ul>
 <h1>基本的MYSQL管理模块</h1>
 <ul>
-<li>mysql_user:管理用户及授权</li>
-<li>host_all:是不是对该名字的所有的主机进行操作,但不能在创建用户时使用</li>
-<li>priv:*.*:SELECT的形式</li>
+<li>
+<p>mysql_user:管理用户及授权</p>
+<ul>
+<li>
+<p>host_all*: 是不是对该名字的所有的主机进行操作,但不能在创建用户时使用</p>
+</li>
+<li>
+<p>priv*:  *.*:SELECT的形式</p>
+</li>
+</ul>
+</li>
 </ul>
 <div class="highlight"><pre><span></span>#去除所有匿名用户
 - mysql_user:
@@ -716,7 +724,7 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
 
 
 <p>执行结果:
-<img alt="" src="linear.png" title="linear"></p>
+<img alt="" src="../images/linear.png" title="linear"></p>
 <ul>
 <li>free :即每个主机的执行过程是连续的,不存在等待的情况</li>
 </ul>
@@ -732,7 +740,7 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
 
 
 <p>执行结果:
-<img alt="" src="free.png" title="linear"></p>
+<img alt="" src="../images/free.png" title="linear"></p>
 <ul>
 <li>debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后，继续执行，如：</li>
 </ul>

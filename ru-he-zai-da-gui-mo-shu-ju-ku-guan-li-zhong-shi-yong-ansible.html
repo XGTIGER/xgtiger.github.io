@@ -123,9 +123,17 @@
 </ul>
 <h1>基本的MYSQL管理模块</h1>
 <ul>
-<li>mysql_user:管理用户及授权</li>
-<li>host_all:是不是对该名字的所有的主机进行操作,但不能在创建用户时使用</li>
-<li>priv:*.*:SELECT的形式</li>
+<li>
+<p>mysql_user:管理用户及授权</p>
+<ul>
+<li>
+<p>host_all*: 是不是对该名字的所有的主机进行操作,但不能在创建用户时使用</p>
+</li>
+<li>
+<p>priv*:  *.*:SELECT的形式</p>
+</li>
+</ul>
+</li>
 </ul>
 <div class="highlight"><pre><span></span>#去除所有匿名用户
 - mysql_user:
