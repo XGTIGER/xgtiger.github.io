@@ -150,8 +150,8 @@
     #范例:移除所有名为sally用户
 
 - mysql_user:
-name: sally
-host_all: yes
+    name: sally
+    host_all: yes
     state: absent
 </pre></div>
 
@@ -159,19 +159,19 @@ host_all: yes
 <ul>
 <li>mysql_db: 管理数据库的创建/移除/备份/导入</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="x">    #创建一个数据库</span>
+<div class="highlight"><pre><span></span><span class="x">#创建一个数据库</span>
 <span class="x">- name: Create a new database with name &#39;bobdata&#39;</span>
 <span class="x">  mysql_db:</span>
 <span class="x">    name: bobdata</span>
 <span class="x">    state: present</span>
 
-<span class="x">  #逻辑备份所有数据</span>
+<span class="x">#逻辑备份所有数据</span>
 <span class="x">- name: Dump all databases to hostname.sql</span>
 <span class="x">  mysql_db:</span>
 <span class="x">    state: dump</span>
 <span class="x">    name: all</span>
 <span class="x">    target: /tmp/</span><span class="cp">{{</span> <span class="nv">inventory_hostname</span> <span class="cp">}}</span><span class="x">.sql</span>
-<span class="x">  #导入SQL脚本</span>
+<span class="x">#导入SQL脚本</span>
 <span class="x">- name: Import file.sql similar to mysql -u &lt;username&gt; -p &lt;password&gt; &lt; hostname.sql</span>
 <span class="x">  mysql_db:</span>
 <span class="x">    state: import</span>
@@ -327,14 +327,16 @@ host_all: yes
 </pre></div>
 
 
-<p>然后,无论是什么系统类型,task流程都会走到init这里.做了几件事:
-<em> 生成mysqld 服务控制脚本
-</em> 生成服务配置
-<em> 启动mysql服务
-</em> 清理匿名用户
-<em> 为root用户设置密码
-</em> 使用服务开机启动
-当然可以做的更详细,这里仅为了演示.</p>
+<p>然后,无论是什么系统类型,task流程都会走到init这里.做了几件事:</p>
+<ul>
+<li>生成mysqld 服务控制脚本</li>
+<li>生成服务配置</li>
+<li>启动mysql服务</li>
+<li>清理匿名用户</li>
+<li>为root用户设置密码</li>
+<li>使用服务开机启动</li>
+</ul>
+<p>当然可以做的更详细,这里仅为了演示.</p>
 <div class="highlight"><pre><span></span><span class="x"># init a mysql instance</span>
 <span class="x">---</span>
 
@@ -386,9 +388,9 @@ host_all: yes
 </pre></div>
 
 
-<p>注意这里生成服务配置文件时,如果目标文件内容有所改变,这里将会触发"重启服务"的操作,具体有handler处理:
-handlers/main.yml</p>
-<div class="highlight"><pre><span></span><span class="x">---</span>
+<p>注意这里生成服务配置文件时,如果目标文件内容有所改变,这里将会触发"重启服务"的操作,具体有handler处理:</p>
+<div class="highlight"><pre><span></span><span class="x">#handlers/main.yml</span>
+<span class="x">---</span>
 <span class="x">- name: restart mysql</span>
 <span class="x">  service: &quot;name=</span><span class="cp">{{</span> <span class="nv">mysql_daemon</span> <span class="cp">}}</span><span class="x"> state=restarted&quot;</span>
 <span class="x">  when: mysql_restart_daemon</span>
@@ -481,10 +483,12 @@ Requirements:  MySQLdb
 </pre></div>
 
 
-<p>类似基本mysql_user模块,这里我设定了两个有用的参数
-<em> auto_get_master: 自动找到复制集群的主库
-</em> execute_on_master :需要在主库上才能招行,防止破坏集群的正常复制.
-使用范例:</p>
+<p>类似基本mysql_user模块,这里我设定了两个有用的参数</p>
+<ul>
+<li>auto_get_master: 自动找到复制集群的主库</li>
+<li>execute_on_master :需要在主库上才能招行,防止破坏集群的正常复制.
+使用范例:</li>
+</ul>
 <div class="highlight"><pre><span></span><span class="x">    mysql_execute:</span>
 <span class="x">        login_port: 3358</span>
 <span class="x">        login_password: pass</span>
@@ -497,8 +501,9 @@ Requirements:  MySQLdb
 
 
 <p>如果有兴趣研究源码请到这里</p>
+<h1>关于执行效率</h1>
+<p>据我的经验,如修改用户授权开30个并发对10000+实例的进行操作,基本能在20分钟内完成,操作效率相对还是很高的,对较小规模的集群可以做到"分分钟"搞定.</p>
 <h1>总结</h1>
-<p>关于执行效率,据我的经验,如修改用户授权开30个并发对10000+实例的进行操作,基本能在20分钟内完成,操作效率相对还是很高的,如果对较小规模的集群可以做到"分分钟"搞定.</p>
 <p>Ansible带来了一种简洁、高效、灵活的方式来完成如果使用传统方式通常比较复杂(也意味着更多的出错机会)的工作，很多场景确实有事半功倍效果。
 通过这些经验案例,希望能抛砖引玉,大家再举一反三。</p>
         </div><!-- /.entry-content -->
