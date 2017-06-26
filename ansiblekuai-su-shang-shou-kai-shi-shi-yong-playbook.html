@@ -1,48 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <title>ansible快速上手--开始使用playbook</title>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
-        <link href="/" type="application/atom+xml" rel="alternate" title="XGTIGER's Notes ATOM Feed" />
+    <title>ansible快速上手--开始使用playbook - XGTIGER's Notes</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-        <!--[if IE]>
-                <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-        <!--[if lte IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie.css"/>
-                <script src="/js/IE8.js" type="text/javascript"></script><![endif]-->
+<link rel="canonical" href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html">
 
-        <!--[if lt IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie6.css"/><![endif]-->
+        <meta name="author" content="wyk" />
+        <meta name="description" content="使用第一个playbook，最简单的形式 #modify_apache_config.yml --- - hosts: webservers vars: http_port: 80 max_clients: 200 remote_user: root tasks: - name: ensure apache is at the latest version yum: name=httpd state=latest - name: write the apache config file template: src=/srv/httpd.j2 dest=/etc/httpd.conf notify: - restart apache - name: ensure apache is running …" />
+
+        <meta property="og:site_name" content="XGTIGER's Notes" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="ansible快速上手--开始使用playbook"/>
+        <meta property="og:url" content="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html"/>
+        <meta property="og:description" content="使用第一个playbook，最简单的形式 #modify_apache_config.yml --- - hosts: webservers vars: http_port: 80 max_clients: 200 remote_user: root tasks: - name: ensure apache is at the latest version yum: name=httpd state=latest - name: write the apache config file template: src=/srv/httpd.j2 dest=/etc/httpd.conf notify: - restart apache - name: ensure apache is running …"/>
+        <meta property="article:published_time" content="2015-02-10" />
+            <meta property="article:section" content="Ansible" />
+            <meta property="article:author" content="wyk" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
 
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="">XGTIGER's Notes </a></h1>
-                <nav><ul>
-                    <li ><a href="/category/ansible.html">Ansible</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-        
-<section id="content" class="body">    
-<article>
-        <header> <h1 class="entry-title"><a href="ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html"
-        rel="bookmark" title="Permalink to ansible快速上手--开始使用playbook">ansible快速上手--开始使用playbook</a></h1>   </header>
-        <div class="entry-content">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+XGTIGER's Notes            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/category/ansible.html">Ansible</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html"
+                       rel="bookmark"
+                       title="Permalink to ansible快速上手--开始使用playbook">
+                        ansible快速上手--开始使用playbook
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
 <footer class="post-info">
-        <abbr class="published" title="2015-02-10T19:40:00+08:00">
-                二 10 二月 2015
-        </abbr>
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-02-10T19:40:00+08:00"> 二 10 二月 2015</time>
+    </span>
 
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->        <h2>使用第一个playbook，最简单的形式</h2>
+
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <html><body><h2 id="shi-yong-di-yi-ge-playbookzui-jian-dan-de-xing-shi">使用第一个playbook，最简单的形式</h2>
 <div class="highlight"><pre><span></span>#modify_apache_config.yml
 ---
 - hosts: webservers
@@ -63,8 +121,6 @@
     - name: restart apache
       service: name=httpd state=restarted
 </pre></div>
-
-
 <p>先介绍下几个重要的ansible playbook的任务执行结果状态：</p>
 <ul>
 <li>changed： 操作成功，且对操作目标做出了修改</li>
@@ -76,17 +132,15 @@
 <li>hosts：目标主机（组），来自inventory，可以是组名、正则模式、单个IP、单个主机名等，这里是主机组名。</li>
 <li>vars: 即变量的定义，这里变量是针对该play的。变量可以被引用，这里实际在模板httpd.j2中被引用，下面的测试demo将展示如何使用变量。</li>
 <li>remote_user： 连接到ssh-server的系统用户，这里使用root</li>
-<li>tasks： 定义任务部分，可以有任意多个“task”，每个task完成一个动作，可以是安装完成某些软件、重启某个服务、修改某个文件等等。
+<li>tasks： 定义任务部分，可以有任意多个&ldquo;task&rdquo;，每个task完成一个动作，可以是安装完成某些软件、重启某个服务、修改某个文件等等。
         这里的template/service均为所使用功能模块的名子，这与使用ansible命令行时，功能完全一致，详细的用法，还是<strong>ansible-doc -l</strong>来查看。比如service: name=xx state=xx,这里的name/state均是service模块所使用的参数。</li>
 <li>notify/handler： 在task中可以出现notify关键字，它表示本task（这里指修改配置文件 ）结果是changed时，发出这个通知，通知的结果就是，之后定义的handler作出相应的动作，这里当配置有修改时，将会重启apache服务</li>
 </ul>
 <p>可以使用ansilbe-playbook 命令执行这个playbook:</p>
 <div class="highlight"><pre><span></span>ansible-playbook -i host.ivt  modify_apache_config.yml 
 </pre></div>
-
-
 <p>playbook执行的特点是结果一致性（除了异常发生）</p>
-<h2>一个playbook,可以有多个play.</h2>
+<h2 id="yi-ge-playbookke-yi-you-duo-ge-play">一个playbook,可以有多个play.</h2>
 <p>这将稍微复杂些，task的执行状态也可以通过register关键字来注册到变量，这个变量（更多细节参考<a href="http://docs.ansible.com/ansible/common_return_values.html">这里</a>)将是全局可用，配合条件判断语法，作出不同的动作处理</p>
 <p>如果有兴趣，可以直接看我的这个dockerhost初始化剧本。
 下面再来一个简单的demo:</p>
@@ -117,14 +171,12 @@
 
 <span class="x">    - name: install packages  via pip</span>
 <span class="x">      pip:</span>
-<span class="x">        name: &quot;</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        name: "</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x">"</span>
 <span class="x">        state: latest</span>
 <span class="x">      with_items:</span>
-<span class="x">        - &quot;</span><span class="cp">{{</span><span class="nv">list_tar</span><span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        - "</span><span class="cp">{{</span><span class="nv">list_tar</span><span class="cp">}}</span><span class="x">"</span>
 <span class="x">      tags: install_packages</span>
 </pre></div>
-
-
 <p>这个例子，出现了两个新的关键字：</p>
 <ul>
 <li>tags：就是标签，可以在ansible-playbook命令中使用--tags 来指定仅执行哪些任务</li>
@@ -132,28 +184,53 @@
         item 即是当前的变量内容。
 这里涉及了变量的使用：在ansible playbook中，变量应该严格以"{{var}}"(双引号）的形式来使用。</li>
 </ul>
-<p>playbook的初体验就暂且先到这里。</p>
-        </div><!-- /.entry-content -->
+<p>playbook的初体验就暂且先到这里。</p></body></html>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
 
-</article>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group " id="tags">
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+  </ul>
 </section>
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-        </section><!-- /#extras -->
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 wyk
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>, which takes great advantages of <a href="http://python.org">python</a>.
-                </address><!-- /#about -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
 
-                <p>The theme is by <a href="http://smashingmagazine.com">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
 
 </body>
 </html>

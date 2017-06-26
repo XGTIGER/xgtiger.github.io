@@ -1,1014 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <title>XGTIGER's Notes</title>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
-        <link href="/" type="application/atom+xml" rel="alternate" title="XGTIGER's Notes ATOM Feed" />
+    <title>XGTIGER's Notes</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-        <!--[if IE]>
-                <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-        <!--[if lte IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie.css"/>
-                <script src="/js/IE8.js" type="text/javascript"></script><![endif]-->
+<link rel="canonical" href="">
+        <meta name="author" content="wyk" />
 
-        <!--[if lt IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie6.css"/><![endif]-->
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="XGTIGER's Notes" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="XGTIGER's Notes"/>
+        <meta property="og:url" content=""/>
+        <meta property="og:description" content="XGTIGER's Notes"/>
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
 
 </head>
-
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="">XGTIGER's Notes </a></h1>
-                <nav><ul>
-                    <li ><a href="/category/ansible.html">Ansible</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-        
-        
-        <aside id="featured" class="body"><article>
-                <h1 class="entry-title"><a href="/ru-he-zai-da-gui-mo-shu-ju-ku-guan-li-zhong-shi-yong-ansible.html">如何在大规模数据库管理中使用ANSIBLE</a></h1> 
-<footer class="post-info">
-        <abbr class="published" title="2017-06-24T19:10:00+08:00">
-                六 24 六月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <h1>介绍</h1>
-<p><a href="http://docs.ansible.com/ansible/">Ansible</a> ,现在不只是一个配置管理和应用部署工具，2.2版本更是增加了对<a href="https://zh.wikipedia.org/wiki/%E7%BC%96%E9%85%8D_(%E8%AE%A1%E7%AE%97%E6%9C%BA)">编排</a>的支持,2.0版本经过了代码的完全重构，全面支持可扩展的插件系统，便于使用者通过实现各种功能插件来满足自己的需求。Ansible 的作者Michael DeHaan 同时也是知名软件 Cobbler 与 Func 的作者。</p>
-<p>Ansible的模块设计,遵循<a href="https://zh.wikipedia.org/wiki/%E5%86%AA%E7%AD%89">幂等性</a>的原则,在使用playbook的过程中，你将更清晰的体会到这一特点。</p>
-<p>Ansible 的常被用于如下（但不限于）几个场景：</p>
-<ul>
-<li>
-<p>自动化部署应用</p>
-</li>
-<li>
-<p>自动化配置管理</p>
-</li>
-<li>
-<p>自动化的持续交付</p>
-</li>
-</ul>
-<p>同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless，即 Ansible 没有类似saltstack的agent部署需求，相对灵活简便;缺点也存在，比如执行响应的开销相对大.其实没那么明显，与您常用的ssh指令相当，而且Ansible可使用扩展(如ZeroMQ）来提升执行效率。</p>
-<p>同类工具系统简单的对比：</p>
-<table>
-<thead>
-<tr>
-<th>框架名称</th>
-<th>Ansible</th>
-<th>Saltstack</th>
-<th>Puppet</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>开发语言</td>
-<td>Python</td>
-<td>Python</td>
-<td>Ruby</td>
-</tr>
-<tr>
-<td>是否有客户端</td>
-<td>无</td>
-<td>有</td>
-<td>有</td>
-</tr>
-<tr>
-<td>服务器与远程机器是否相互验证</td>
-<td>是</td>
-<td>是</td>
-<td>是</td>
-</tr>
-<tr>
-<td>服务器与远程机器通信是否加密</td>
-<td>是，使用 OpenSSH</td>
-<td>是，使用 AES 加密</td>
-<td>是，标准 SSL 协议</td>
-</tr>
-<tr>
-<td>平台支持</td>
-<td>支持 AIX、BSD、 HP-UX、 Linux、Mac OSX、Solaris</td>
-<td>支持 BSD、Linux、Mac OS X、Solaris、 Windows</td>
-<td>支持 AIX、BSD、HP-UX、Linux、 MacOSX、Solaris、 Windows</td>
-</tr>
-<tr>
-<td>配置文件格式</td>
-<td>YAML</td>
-<td>YAML</td>
-<td>Ruby 语法格式</td>
-</tr>
-<tr>
-<td>命令行执行</td>
-<td>支持</td>
-<td>支持</td>
-<td>不支持，但可通过配置模块实现</td>
-</tr>
-</tbody>
-</table>
-<p>值得注意的是，Ansible2.0版本后，增强了对WINDOWS服务器的管理支持，但自身依然不支持以WIN主机作管理节点。</p>
-<p>本文通过若干范例,介绍下如何在大规模的数据库集群管理中使用Ansible.现在只需要将 Ansible部署于一台管理节点（在Docker上运行是没问题的，官方<a href="https://hub.docker.com/r/ansible/ansible/">镜像</a> )，便可开始Ansible探索之旅 。</p>
-<h1>重要概念</h1>
-<ul>
-<li><a href="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a>:即Ansible使用的主机清单。如还没有概念,可参考我的另一篇<a href="http://www.zuodba.com/ansible-ji-ben-shi-yong.html">《基本使用》</a>来快速熟悉下.</li>
-<li><a href="http://docs.ansible.com/ansible/playbooks.html">Playbook</a> :ansible的主要工作形式,可参考我的几篇<a href="http://www.zuodba.com/ansible-kuai-su-shang-shou.html">《Playbook简介》</a>快速熟悉下.</li>
-<li><a href="http://docs.ansible.com/ansible/modules.html">Module</a> :ansible的功能基本单元,数量一直在不断增长,目前官方收入的均由python语言编写,但其实可由任何语言完成.所有的模块列表请见<a href="http://docs.ansible.com/ansible/list_of_all_modules.html">这里</a>.</li>
-</ul>
-<h1>基本的MYSQL管理模块</h1>
-<ul>
-<li>
-<p>mysql_user:管理用户及授权</p>
-<ul>
-<li>
-<p><em>host_all</em>: 是不是对该名字的所有的主机进行操作,但不能在创建用户时使用</p>
-</li>
-<li>
-<p><em>priv</em>:  *.*:SELECT的形式</p>
-</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre><span></span>#去除所有匿名用户
-- mysql_user:
-    name: &#39;&#39;
-    host_all: yes
-    state: absent
-
-    #创建具备所有库权限的用户bob,密码12345或使用mysql的HASH形式
-
-- mysql_user:
-    name: bob
-    password: 12345
-    priv: &#39;*.*:ALL&#39;
-    state: present
-- mysql_user:
-    name: bob
-    password: &#39;*EE0D72C1085C46C5278932678FBE2C6A782821B4&#39;
-    encrypted: yes
-    priv: &#39;*.*:ALL&#39;
-    state: present
-
-    #范例:移除所有名为sally用户
-
-- mysql_user:
-    name: sally
-    host_all: yes
-    state: absent
-</pre></div>
-
-
-<ul>
-<li>mysql_db: 管理数据库的创建/移除/备份/导入</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">#创建一个数据库</span>
-<span class="x">- name: Create a new database with name &#39;bobdata&#39;</span>
-<span class="x">  mysql_db:</span>
-<span class="x">    name: bobdata</span>
-<span class="x">    state: present</span>
-
-<span class="x">#逻辑备份所有数据</span>
-<span class="x">- name: Dump all databases to hostname.sql</span>
-<span class="x">  mysql_db:</span>
-<span class="x">    state: dump</span>
-<span class="x">    name: all</span>
-<span class="x">    target: /tmp/</span><span class="cp">{{</span> <span class="nv">inventory_hostname</span> <span class="cp">}}</span><span class="x">.sql</span>
-<span class="x">#导入SQL脚本</span>
-<span class="x">- name: Import file.sql similar to mysql -u &lt;username&gt; -p &lt;password&gt; &lt; hostname.sql</span>
-<span class="x">  mysql_db:</span>
-<span class="x">    state: import</span>
-<span class="x">    name: all</span>
-<span class="x">    target: /tmp/</span><span class="cp">{{</span> <span class="nv">inventory_hostname</span> <span class="cp">}}</span><span class="x">.sql</span>
-</pre></div>
-
-
-<ul>
-<li>mysql_variables: 管理运行中MYSQL的全局变量,如果有重启复制线程的需求,配合mysql_replication可实现</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">#管理MYSQL的变量,根据需要可控是否重启复制线程</span>
-<span class="x">---</span>
-<span class="x">- hosts: all</span>
-<span class="x">  vars:</span>
-<span class="x">    restart_replication: &quot;</span><span class="cp">{{</span> <span class="nv">restart_repl</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;no&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">  vars_prompt:</span>
-<span class="x">    - name: &quot;login_password&quot;</span>
-<span class="x">      prompt: &quot;mysql login password&quot;</span>
-<span class="x">  tasks:</span>
-<span class="x">    - name: stop slave when needed</span>
-<span class="x">      mysql_replication:</span>
-<span class="x">        login_host: &quot;</span><span class="cp">{{</span><span class="nv">login_host</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        login_port: &quot;</span><span class="cp">{{</span><span class="nv">login_port</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="m">3358</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        login_user: &quot;</span><span class="cp">{{</span> <span class="nv">login_user</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;root&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        login_password: &quot;</span><span class="cp">{{</span> <span class="nv">login_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        mode: &quot;stopslave&quot;</span>
-<span class="x">      when: restart_replication ==&#39;yes&#39;</span>
-<span class="x">    - name: manage mysql variables</span>
-<span class="x">      mysql_variables:</span>
-<span class="x">        login_host: &quot;</span><span class="cp">{{</span><span class="nv">login_host</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        login_port: &quot;</span><span class="cp">{{</span><span class="nv">login_port</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="m">3358</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        login_user: &quot;</span><span class="cp">{{</span> <span class="nv">login_user</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;root&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        login_password: &quot;</span><span class="cp">{{</span> <span class="nv">login_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        variable: &quot;</span><span class="cp">{{</span> <span class="nv">variable</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        value: &quot;</span><span class="cp">{{</span> <span class="nv">value</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    - name: start slave when needed</span>
-<span class="x">      mysql_replication:</span>
-<span class="x">        login_host: &quot;</span><span class="cp">{{</span><span class="nv">login_host</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        login_port: &quot;</span><span class="cp">{{</span><span class="nv">login_port</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="m">3358</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        login_user: &quot;</span><span class="cp">{{</span> <span class="nv">login_user</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;root&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        login_password: &quot;</span><span class="cp">{{</span> <span class="nv">login_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        mode: &quot;startslave&quot;</span>
-<span class="x">      when: restart_replication == &#39;yes&#39;</span>
-</pre></div>
-
-
-<ul>
-<li>mysql_replication: 管理主从复制,开启/停止复制线程/获取复制信息等等</li>
-</ul>
-<div class="highlight"><pre><span></span># 停止复制线程
-- mysql_replication:
-    mode: stopslave
-
-# 获取主库的复制坐标
-- mysql_replication:
-    mode: getmaster
-
-# change master
-- mysql_replication:
-    mode: changemaster
-    master_host: 192.0.2.1
-    master_log_file: mysql-bin.000009
-    master_log_pos: 4578
-
-# 检查ansible.example.com的复制状态
-
-- mysql_replication:
-    mode: getslave
-    login_host: ansible.example.com
-    login_port: 3308
-</pre></div>
-
-
-<h1>编写role和playbook实现自定义功能</h1>
-<p>playbook和role才是使用ansible的正确姿势，参考<a href="http://www.zuodba.com/ansible-kuai-su-shang-shou-role.html">Role的使用</a>
-这里通过编写一个role来完成一个通用的mysql的部署功能:
-目录结构如下:</p>
-<div class="highlight"><pre><span></span>mysql_install
-├── defaults
-│   └── main.yml
-├── files
-│   └── install.sh
-├── handlers
-│   └── main.yml
-├── meta
-│   └── main.yml
-├── README.md
-├── tasks
-│   ├── generate_mysqld_script.yml
-│   ├── init.yml
-│   ├── main.yml
-│   ├── setup_Debian.yml
-│   ├── setup_from_source.yml
-│   └── setup_RedHat.yml
-├── templates
-│   ├── my5.5.cnf.j2
-│   ├── my.cnf.j2
-│   └── mysqld.j2
-└── vars
-    ├── Debian.yml
-    ├── From_source.yml
-    ├── main.yml
-    └── Redhat.ym
-</pre></div>
-
-
-<p>我们着重关注task部分,因为这是主要的功能实现部分.
-入口是main.yml,基本逻辑是:
-1.如果不使用源码安装,则根据目标OS的类型从其对应源另安装,这里使用了<em>include</em>,使用结构更清晰:</p>
-<div class="highlight"><pre><span></span><span class="x">#setup a mysqld</span>
-<span class="x">---</span>
-<span class="x">- name: Include OS-specific variables.</span>
-<span class="x">  include_vars: &quot;</span><span class="cp">{{</span> <span class="nv">ansible_os_family</span> <span class="cp">}}</span><span class="x">.yml&quot;</span>
-<span class="x">  when: not mysql_install_from_source</span>
-
-<span class="x">- include: setup_from_source.yml</span>
-<span class="x">  when: mysql_install_from_source and do_install</span>
-
-<span class="x">- include: setup_RedHat.yml</span>
-<span class="x">  when: not mysql_install_from_source  and ansible_os_family == &#39;RedHat&#39; and do_</span>
-<span class="x">install</span>
-
-<span class="x">- include: setup_Debian.yml</span>
-<span class="x">  when: not mysql_install_from_source  and ansible_os_family == &#39;Debian&#39; and do_</span>
-<span class="x">install</span>
-
-<span class="x">- include: init.yml</span>
-</pre></div>
-
-
-<p>这里我们只看在REDHAT系统的安装过程,这里首先检查是否已经安装过了MYSQL,只有否才会进行安装及初始化数据目录:</p>
-<div class="highlight"><pre><span></span><span class="x">---</span>
-<span class="x">- name: INSTALL ON REDHAT | Check if MySQL is already installed.</span>
-<span class="x">  stat: path=/etc/init.d/mysqld</span>
-<span class="x">  register: mysql_installed</span>
-
-<span class="x">- name: INSTALL ON REDHAT | add mysql repo from mysql.com</span>
-<span class="x">  yum:</span>
-<span class="x">    name: &quot;http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm&quot;</span>
-<span class="x">    state: present</span>
-<span class="x">  when: mysql_installed.stat.exists == false</span>
-
-<span class="x">- name: INSTALL ON REDHAT | ensure MySQL packages are installed</span>
-<span class="x">  yum:</span>
-<span class="x">    name: &quot;</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    state: installed</span>
-<span class="x">  with_items: &quot;</span><span class="cp">{{</span><span class="nv">mysql_packages</span><span class="cp">}}</span><span class="x">&quot;</span>
-
-<span class="x">- name: INSTALL ON REDHAT | init datadir</span>
-<span class="x">  shell: &quot;mysql_install_db --user=</span><span class="cp">{{</span><span class="nv">mysql_user</span><span class="cp">}}</span><span class="x"> --datadir=</span><span class="cp">{{</span><span class="nv">mysql_datadir</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">  when: mysql_installed.stat.exists == false</span>
-</pre></div>
-
-
-<p>然后,无论是什么系统类型,task流程都会走到init这里.做了几件事:</p>
-<ul>
-<li>生成mysqld 服务控制脚本</li>
-<li>生成服务配置</li>
-<li>启动mysql服务</li>
-<li>清理匿名用户</li>
-<li>为root用户设置密码</li>
-<li>使用服务开机启动</li>
-</ul>
-<p>当然可以做的更详细,这里仅为了演示.</p>
-<div class="highlight"><pre><span></span><span class="x"># init a mysql instance</span>
-<span class="x">---</span>
-
-<span class="x">- name: generate mysqld script</span>
-<span class="x">  template:</span>
-<span class="x">    src: mysqld.j2</span>
-<span class="x">    dest: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_initd</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">mysql_daemon</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    owner: root</span>
-<span class="x">    group: root</span>
-<span class="x">    mode: 0744</span>
-<span class="x">    backup: yes</span>
-<span class="x">  tags: generate_mysqld_script</span>
-
-<span class="x">- name: Copy my.cnf</span>
-<span class="x">  template:</span>
-<span class="x">    src: my.cnf.j2</span>
-<span class="x">    dest: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_conf_file</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    owner: root</span>
-<span class="x">    group: root</span>
-<span class="x">    mode: 644</span>
-<span class="x">  notify: restart mysql</span>
-
-<span class="x">- name: make mysqld started</span>
-<span class="x">  service:</span>
-<span class="x">    name: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_daemon</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    state: started</span>
-
-<span class="x">- name: Delete anonymous user.</span>
-<span class="x">  mysql_user:</span>
-<span class="x">    name: &quot;&quot;</span>
-<span class="x">    state: absent</span>
-<span class="x">    login_user: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_root_username</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    login_password: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_root_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    check_implicit_admin: true</span>
-
-<span class="x">- name: set MySQL root password for all hosts.</span>
-<span class="x">  mysql_user:</span>
-<span class="x">    name: root</span>
-<span class="x">    password: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_root_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    login_user: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_root_username</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    login_password: &quot;&quot;</span>
-<span class="x">    check_implicit_admin: true</span>
-<span class="x">    host_all: yes</span>
-
-<span class="x">- name: enable mysql daemon on os start</span>
-<span class="x">  service:</span>
-<span class="x">    name: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_daemon</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">    enabled: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_daemon_enabled_on_os_start</span> <span class="cp">}}</span><span class="x">&quot;</span>
-</pre></div>
-
-
-<p>注意这里生成服务配置文件时,如果目标文件内容有所改变,这里将会触发"重启服务"的操作,具体有handler处理:</p>
-<div class="highlight"><pre><span></span><span class="x">#handlers/main.yml</span>
-<span class="x">---</span>
-<span class="x">- name: restart mysql</span>
-<span class="x">  service: &quot;name=</span><span class="cp">{{</span> <span class="nv">mysql_daemon</span> <span class="cp">}}</span><span class="x"> state=restarted&quot;</span>
-<span class="x">  when: mysql_restart_daemon</span>
-</pre></div>
-
-
-<p>并且配置文件的内容来自role的默认配置defaults/main.yml.</p>
-<p>假设有下面这样一个playbook:</p>
-<div class="highlight"><pre><span></span>---
-
-- name: install mysql on all nodes
-  hosts:
-    - all
-  remote_user: root
-  gather_facts: True
-  roles:
-    - { role: mysql_install}
-</pre></div>
-
-
-<p>执行</p>
-<div class="highlight"><pre><span></span>ansible-playbook -i hosts.ivt site.yml 
-</pre></div>
-
-
-<p>如果没有异常的出现,所有目标主机将达到一致的状态.</p>
-<h1>自定义的执行模块</h1>
-<p>前文说到ansible是全面支持插件系统的,如模块、callback、connections、loopup等等.ANSIBLE自带的模块虽然已经非常强大,但有时仍不能覆盖某些场景,比如我就想实现在数据库的查询,这里我实现了一个简单的执行Module,由于并未全面对mysql的各种语句作过测试,所以使用场景目前还是有限.
-先看下文档:</p>
-<div class="highlight"><pre><span></span>&gt; MYSQL_EXECUTE
-
-  execute a SQL query in MySQL  database.
-
-Options (= is mandatory):
-
-- auto_get_master
-        `yes&#39; will detect the master node and execute execute query on master,if execute_on_master is &quot;yes&quot; in replication situation. `no&#39;
-        will exit with an error:this host is not master node. (Choices: yes, false) [Default: False]
-
-- config_file
-        Specify a config file from which user and password are to be read [Default: ~/.my.cnf]
-
-- connect_timeout
-        The connection timeout when connecting to the MySQL server. [Default: 30]
-
-- dict_reault
-        whether the result data should be dict type in json format [Default: False]
-
-- execute_on_master
-        `yes&#39; will execute the query on the master node if in replication situation. (Choices: yes, false) [Default: False]
-
-- filter_columns
-        filter the specified column(s)(,seperated) to the result data [Default: all]
-
-- login_host
-        Host running the database [Default: localhost]
-
-- login_password
-        The password used to authenticate with [Default: None]
-
-- login_port
-        Port of the MySQL server. Requires login_host be defined as other then localhost if login_port is used [Default: 3306]
-
-- login_unix_socket
-        The path to a Unix domain socket for local connections [Default: None]
-
-- login_user
-        The username used to authenticate with [Default: None]
-
-= query
-        a SQL query in MySQL  database
-
-- ssl_ca
-        The path to a Certificate Authority (CA) certificate. This option, if used, must specify the same certificate as used by the
-        server. [Default: None]
-
-- ssl_cert
-        The path to a client public key certificate. [Default: None]
-
-- ssl_key
-        The path to the client private key. [Default: None]
-
-Notes:  Execute a query on mysql server.For some dml,generally must be executed on the master node. Requires the MySQLdb Python package on
-        the remote host. For Ubuntu, this is as easy as apt-get install python-mysqldb. (See [apt].) For CentOS/Fedora, this is as
-        easy as yum install MySQL-python. (See [yum].) Both `login_password&#39; and `login_user&#39; are required when you are passing
-        credentials. If none are present, the module will attempt to read the credentials from `~/.my.cnf&#39;, and finally fall back to
-        using the MySQL default login of &#39;root&#39; with no password.
-
-Requirements:  MySQLdb
-</pre></div>
-
-
-<p>类似基本mysql_user模块,这里我设定了两个有用的参数</p>
-<ul>
-<li>auto_get_master: 自动找到复制集群的主库</li>
-<li>execute_on_master :需要在主库上才能招行,防止破坏集群的正常复制.
-使用范例:</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">    mysql_execute:</span>
-<span class="x">        login_port: 3358</span>
-<span class="x">        login_password: pass</span>
-<span class="x">        login_user: monitor</span>
-<span class="x">        login_host: &quot;</span><span class="cp">{{</span> <span class="nv">inventory_hostname</span> <span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">        query: &quot;show master status&quot;</span>
-<span class="x">        execute_on_master: yes</span>
-<span class="x">        auto_get_master: yes</span>
-</pre></div>
-
-
-<p>如果有兴趣研究源码请到这里</p>
-<h1>关于执行效率</h1>
-<p>据我的经验,如修改用户授权开30个并发对10000+实例的进行操作,基本能在20分钟内完成,操作效率相对还是很高的,对较小规模的集群可以做到"分分钟"搞定.</p>
-<h1>总结</h1>
-<p>Ansible带来了一种简洁、高效、灵活的方式来完成如果使用传统方式通常比较复杂(也意味着更多的出错机会)的工作，很多场景确实有事半功倍效果。
-通过这些经验案例,希望能抛砖引玉,大家再举一反三。</p>
-                </article>
-                </aside><!-- /#featured -->
-            <section id="content" class="body">
-                <h1>Other articles</h1>
-                <hr />
-                    <ol id="posts-list" class="hfeed">
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansible-kuai-su-shang-shou-role.html" rel="bookmark" title="Permalink to ansible 快速上手--role">ansible 快速上手--role</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-04-20T18:20:00+08:00">
-                一 20 四月 2015
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <p>让ansible 工作的真正的姿势,还是使用<a href="http://docs.ansible.com/ansible/playbooks_roles.html">role</a>
-简单来说,role的组织类似pypi,是ansible的功能包.
-ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布的role :</p>
-<div class="highlight"><pre><span></span>ansible-galaxy install username.rolename
-</pre></div>
-
-
-<p>或开始创建一个新的role:</p>
-<div class="highlight"><pre><span></span>ansible-galaxy init testrole
-</pre></div>
-
-
-<p>这样名称为<em>testrole</em>的role就初始化好了,看看它的结构:</p>
-<div class="highlight"><pre><span></span>├── defaults
-│   └── main.yml
-├── files
-├── handlers
-│   └── main.yml
-├── meta
-│   └── main.yml
-├── README.md
-├── tasks
-│   └── main.yml
-├── templates
-├── tests
-│   ├── inventory
-│   └── test.yml
-└── vars
-    └── main.yml
-</pre></div>
-
-
-<ul>
-<li>defaults:简单说就是可以配置默认值的位置.</li>
-<li>files: 可以将你在项目中使用的任何文件,比如自定的脚本 …</li></ul>
-                <a class="readmore" href="/ansible-kuai-su-shang-shou-role.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansible-kuai-su-shang-shou-loops.html" rel="bookmark" title="Permalink to ansible 快速上手--loops">ansible 快速上手--loops</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-04-13T13:50:00+08:00">
-                一 13 四月 2015
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <p>Ansible提供了多种遍历操作功能,包括对特定文件等操作</p>
-<ul>
-<li>with_items标准循环</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">- name: add several users</span>
-<span class="x">  user: name=</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x"> state=present groups=wheel</span>
-<span class="x">  with_items:</span>
-<span class="x">     - testuser1</span>
-<span class="x">     - testuser2</span>
-</pre></div>
-
-
-<ul>
-<li>笛卡尔积</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">- hosts: all</span>
-<span class="x">  vars:</span>
-<span class="x">    - list1: [1,2,3]</span>
-<span class="x">    - list2: [4,5,6]</span>
-<span class="x">    - list3: [7,8,9]</span>
-<span class="x">  tasks:</span>
-<span class="x">    - debug: msg=&quot;</span><span class="cp">{{</span><span class="nv">item</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">      with_cartesian:</span>
-<span class="x">        - list1</span>
-<span class="x">        - list2</span>
-<span class="x">        - list3</span>
-</pre></div>
-
-
-<ul>
-<li>with_file</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">---</span>
-<span class="x">- hosts: all</span>
-
-<span class="x">  tasks:</span>
-
-<span class="x">    # emit a debug message containing …</span></pre></div>
-                <a class="readmore" href="/ansible-kuai-su-shang-shou-loops.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansible-kuai-su-shang-shou-prompts.html" rel="bookmark" title="Permalink to ansible 快速上手--Prompts">ansible 快速上手--Prompts</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-04-03T15:59:00+08:00">
-                五 03 四月 2015
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <p>prompt关键字能够实现交互式动态提供变量给playbook</p>
-<ul>
-<li>常规用法 </li>
-</ul>
-<div class="highlight"><pre><span></span>---
-- hosts: all
-  remote_user: root
-
-  vars:
-    from: &quot;camelot&quot;
-
-  vars_prompt:
-    - name: &quot;name&quot;
-      prompt: &quot;what is your name?&quot;
-    - name: &quot;quest&quot;
-      prompt: &quot;what is your quest?&quot;
-    - name: &quot;favcolor&quot;
-      prompt: &quot;what is your favorite color?&quot;
-</pre></div>
-
-
-<ul>
-<li>使用 default:</li>
-</ul>
-<div class="highlight"><pre><span></span>vars_prompt:
-
-  - name: &quot;release_version&quot;
-    prompt: &quot;Product release version&quot;
-    default: &quot;1.0&quot;
-</pre></div>
-
-
-<ul>
-<li>use private</li>
-</ul>
-<div class="highlight"><pre><span></span>vars_prompt:
-
-  - name: &quot;some_password&quot;
-    prompt …</pre></div>
-                <a class="readmore" href="/ansible-kuai-su-shang-shou-prompts.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansible-kuai-su-shang-shou-strategy.html" rel="bookmark" title="Permalink to ansible 快速上手--strategy">ansible 快速上手--strategy</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-03-18T09:49:00+08:00">
-                三 18 三月 2015
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <p>strategy 表明每个task在hosts中执行的相对顺序
-主要有三种执行策略:</p>
-<ul>
-<li>linear 线性:每个task的执行在全部主机执行完成时再执行下一个</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">- hosts: &quot;</span><span class="cp">{{</span><span class="nv">hosts</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">  gather_facts: yes</span>
-<span class="x">  strategy: linear</span>
-<span class="x">  tasks:</span>
-<span class="x">    - name: debug</span>
-<span class="x">      debug: var=ansible_kernel</span>
-</pre></div>
-
-
-<p>执行结果:
-<img alt="" src="../images/linear.png" title="linear"></p>
-<ul>
-<li>free :即每个主机的执行过程是连续的,不存在等待的情况</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">- hosts: &quot;</span><span class="cp">{{</span><span class="nv">hosts</span><span class="cp">}}</span><span class="x">&quot;</span>
-<span class="x">  gather_facts: yes</span>
-<span class="x">  strategy: free</span>
-<span class="x">  tasks:</span>
-<span class="x">    - name: sleep</span>
-<span class="x">      shell: sleep &quot;</span><span class="cp">{{</span><span class="m">10</span><span class="o">|</span><span class="nf">random</span><span class="cp">}}</span><span class="x">&quot;;</span>
-<span class="x">    - name: debug</span>
-<span class="x">      debug: var=ansible_kernel</span>
-</pre></div>
-
-
-<p>执行结果:
-<img alt="" src="../images/free.png" title="linear"></p>
-<ul>
-<li>debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后，继续执行，如：</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">- hosts: test …</span></pre></div>
-                <a class="readmore" href="/ansible-kuai-su-shang-shou-strategy.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansible-kuai-su-shang-shou-conditionals.html" rel="bookmark" title="Permalink to ansible 快速上手--Conditionals">ansible 快速上手--Conditionals</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-03-07T22:34:00+08:00">
-                六 07 三月 2015
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <p>条件关键字,极大地加强了逻辑严谨性，并且提升了功能的健壮性</p>
-<ul>
-<li>when: 只有条件为真时该task才会执行</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">tasks:</span>
-<span class="x">    - shell: echo &quot;I&#39;ve got &#39;</span><span class="cp">{{</span> <span class="nv">foo</span> <span class="cp">}}</span><span class="x">&#39; and am not afraid to use it!&quot;</span>
-<span class="x">      when: foo is defined</span>
-
-<span class="x">    - fail: msg=&quot;Bailing out. this play requires &#39;bar&#39;&quot;</span>
-<span class="x">      when: bar is undefined</span>
-</pre></div>
-
-
-<ul>
-<li>or 用在roles和include</li>
-</ul>
-<div class="highlight"><pre><span></span>- hosts: webservers
-  roles:
-     - { role: debian_stock_config, when: ansible_os_family == &#39;Debian&#39; }
-</pre></div>
-
-
-<div class="highlight"><pre><span></span>- include: tasks/sometasks.yml
-  when …</pre></div>
-                <a class="readmore" href="/ansible-kuai-su-shang-shou-conditionals.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html" rel="bookmark" title="Permalink to ansible快速上手--开始使用playbook">ansible快速上手--开始使用playbook</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-02-10T19:40:00+08:00">
-                二 10 二月 2015
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <h2>使用第一个playbook，最简单的形式</h2>
-<div class="highlight"><pre><span></span>#modify_apache_config.yml
----
-- hosts: webservers
-  vars:
-    http_port: 80
-    max_clients: 200
-  remote_user: root
-  tasks:
-    - name: ensure apache is at the latest version
-      yum: name=httpd state=latest
-    - name: write the apache config file
-      template: src=/srv/httpd.j2 dest=/etc/httpd.conf
-      notify:
-      - restart apache
-    - name: ensure apache is running …</pre></div>
-                <a class="readmore" href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansible-kuai-su-shang-shou-dynamic-inventory.html" rel="bookmark" title="Permalink to ansible 快速上手--dynamic inventory">ansible 快速上手--dynamic inventory</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-11-29T11:20:00+08:00">
-                六 29 十一月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <p>Ansible支持<a href="http://docs.ansible.com/ansible/intro_dynamic_inventory.html">动态inventory</a>:
-下面是使用范例：</p>
-<ul>
-<li>脚本需要执行权限:</li>
-</ul>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/python</span>
-<span class="kn">import</span> <span class="nn">json</span><span class="o">,</span><span class="nn">sys</span>
-<span class="k">print</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
-<span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">:[</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">]</span>
-<span class="p">}</span>
-<span class="p">)</span>
-</pre></div>
-</td></tr></table>
-
-<ul>
-<li>当执行--list,脚本返回</li>
-</ul>
-<div class="highlight"><pre><span></span>{
-    &quot;databases&quot;   : {
-        &quot;hosts&quot;   : [ &quot;host1.example.com&quot;, &quot;host2.example.com&quot; ],
-        &quot;vars&quot;    : {
-            &quot;a&quot;   : true
-        }
-    },
-    &quot;webservers&quot;  : [ &quot;host2.example.com&quot;, &quot;host3.example.com&quot; ],
-    &quot;atlanta&quot;     : {
-        &quot;hosts&quot;   : [ &quot;host1.example.com&quot;, &quot;host4 …</pre></div>
-                <a class="readmore" href="/ansible-kuai-su-shang-shou-dynamic-inventory.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansible-kuai-su-shang-shou.html" rel="bookmark" title="Permalink to ansible 快速上手">ansible 快速上手</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-11-28T19:10:00+08:00">
-                五 28 十一月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <p>Ansible 真正也是最重要的使用场景，就是playbook，顾名思义，它会像剧本一样，完成你的任务。
-Ansible的模块设计遵循<a href="https://zh.wikipedia.org/wiki/%E5%86%AA%E7%AD%89">幂等性</a>的原则,在使用playbook的过程中，你将更清晰的体会到这一特点。</p>
-<p>Ansible 的应用目标有如下（但不限于）几个场景：
-<em> 自动化部署应用
-</em> 自动化配置管理
-* 自动化的持续交付</p>
-<p>这里将分几个部分来介绍，方便快速理解ansible的原理及开始使用:</p>
-<ul>
-<li><a href="ansible-ji-ben-shi-yong.html">ansible 基本使用</a></li>
-<li><a href="ansible-kuai-su-shang-shou-dynamic-inventory.html">ansible 快速上手--dynamic inventory</a></li>
-<li><a href="ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html">ansible 快速上手--yaml语法简介</a></li>
-<li><a href="ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html">ansible快速上手－－开始使用playbook</a></li>
-<li><a href="ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></li>
-<li><a href="ansible-kuai-su-shang-shou-strategy.html">ansible 快速上手--strategy</a></li>
-<li><a href="ansible-kuai-su-shang-shou-prompts.html">ansible 快速上手--Prompts</a></li>
-<li><a href="ansible-kuai-su-shang-shou-loops.html">ansible 快速上手--loops</a></li>
-<li><a href="ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></li>
-</ul>
-                <a class="readmore" href="/ansible-kuai-su-shang-shou.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html" rel="bookmark" title="Permalink to ansible 快速上手--yaml语法简介">ansible 快速上手--yaml语法简介</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-11-28T14:20:00+08:00">
-                五 28 十一月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <p>假定您有某种编程语言的基础或至少了解数组、HASH结构。
-yaml类似python语言，有严格的缩进要求，一般是两个空格作为缩进比例。</p>
-<h2>列表和字典</h2>
-<p>列表的所有元素均使用“-”打头例如:</p>
-<div class="highlight"><pre><span></span>- Apple 
-- Orange 
-- Strawberry 
-- Mango
-</pre></div>
-
-
-<p>字典通过key与valuef进行标识例如 :</p>
-<div class="highlight"><pre><span></span><span class="n">name</span><span class="o">:</span> <span class="n">Example</span> <span class="n">Developer</span> 
-<span class="n">job</span><span class="o">:</span> <span class="n">Developer</span> 
-<span class="n">skill</span><span class="o">:</span> <span class="n">Elite</span> 
-</pre></div>
-
-
-<p>或</p>
-<div class="highlight"><pre><span></span>{name: Example Developer, job: Developer, skill: Elite}  
-</pre></div>
-
-
-<h2>ymal中的变量</h2>
-<p>在 yaml 中可以使用vars关键字来定义变量 ：</p>
-<div class="highlight"><pre><span></span><span class="n">vars</span><span class="o">:</span> 
-<span class="n">var_name</span><span class="o">:</span> <span class="n">value</span>  
-</pre></div>
-
-
-<p>变量的引用 :</p>
-<div class="highlight"><pre><span></span><span class="x">- name: add several users </span>
-<span class="x">vars: </span>
-<span class="x">user1: testuser1 </span>
-<span class="x">user2: testuser2 </span>
-<span class="x">user: name=</span><span class="cp">{{</span> <span class="nv">user1</span> <span class="cp">}}</span><span class="x"> state=present …</span></pre></div>
-                <a class="readmore" href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-        
- 
-        <li><article class="hentry">    
-                <header>
-                        <h1><a href="/ansible-ji-ben-shi-yong.html" rel="bookmark" title="Permalink to ansible 基本使用">ansible 基本使用</a></h1>
-                </header>
-                
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-11-28T10:20:00+08:00">
-                五 28 十一月 2014
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->                <h3>简介</h3>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+XGTIGER's Notes            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="/category/ansible.html">Ansible</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="/ansible-ji-ben-shi-yong.html">ansible 基本使用</a></h2>
+                <div class="summary"><html><body><h3 id="jian-jie">简介</h3>
 <p>ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点：</p>
 <ul>
 <li><strong>agentless</strong>模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。</li>
 <li>幂等性：不会重复执行相同的指令。例如不会重复安装软件</li>
 <li>期望状态：只需要告诉被监控端的期望状态。</li>
 </ul>
-<h3>安装</h3>
+<h3 id="an-zhuang">安装</h3>
 <p><code>pip install ansible</code></p>
-<h3>定义Host Inventory（主机清单）</h3>
+<h3 id="ding-yi-host-inventoryzhu-ji-qing-dan">定义Host Inventory（主机清单）</h3>
 <p>vim /etc/ansible/hosts，有以下几种可用形式:</p>
 <ul>
 <li>带附属属性 </li>
@@ -1019,34 +91,67 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
 [others]
 other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
 </pre></div>
-
-
 <ul>
 <li>使用pattern</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="k">[webservers …</span></pre></div>
-                <a class="readmore" href="/ansible-ji-ben-shi-yong.html">read more</a>
-                </div><!-- /.entry-content -->
-        </article></li>
-</ol><!-- /#posts-list -->
-</section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-        </section><!-- /#extras -->
+<div class="highlight"><pre><span></span><span class="k">[webservers …</span></pre></div></body></html>
+                    <a class="btn btn-default btn-xs" href="/ansible-ji-ben-shi-yong.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>, which takes great advantages of <a href="http://python.org">python</a>.
-                </address><!-- /#about -->
+        <ul class="pagination">
+                <li class="prev"><a href="/index2.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="/index.html">1</a></li>
+                    <li class=""><a
+                            href="/index2.html">2</a></li>
+                    <li class="active"><a
+                            href="/index3.html">3</a></li>
+                <li class="next disabled"><a href="#">&raquo;</a></li>
+        </ul>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
 
-                <p>The theme is by <a href="http://smashingmagazine.com">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group " id="tags">
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 wyk
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
 
 </body>
 </html>

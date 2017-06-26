@@ -1,59 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <title>ansible 快速上手--role</title>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
-        <link href="/" type="application/atom+xml" rel="alternate" title="XGTIGER's Notes ATOM Feed" />
+    <title>ansible 快速上手--role - XGTIGER's Notes</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-        <!--[if IE]>
-                <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-        <!--[if lte IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie.css"/>
-                <script src="/js/IE8.js" type="text/javascript"></script><![endif]-->
+<link rel="canonical" href="/ansible-kuai-su-shang-shou-role.html">
 
-        <!--[if lt IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie6.css"/><![endif]-->
+        <meta name="author" content="wyk" />
+        <meta name="description" content="让ansible 工作的真正的姿势,还是使用role 简单来说,role的组织类似pypi,是ansible的功能包. ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布的role : ansible-galaxy install username.rolename 或开始创建一个新的role: ansible-galaxy init testrole 这样名称为testrole的role就初始化好了,看看它的结构: ├── defaults │ └── main.yml ├── files ├── handlers │ └── main.yml ├── meta │ └── main.yml ├── README.md ├── tasks │ └── main.yml ├── templates ├── tests │ ├── inventory │ └── test.yml └── vars └── main.yml defaults:简单说就是可以配置默认值的位置. files: 可以将你在项目中使用的任何文件,比如自定的脚本 …" />
+
+        <meta property="og:site_name" content="XGTIGER's Notes" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="ansible 快速上手--role"/>
+        <meta property="og:url" content="/ansible-kuai-su-shang-shou-role.html"/>
+        <meta property="og:description" content="让ansible 工作的真正的姿势,还是使用role 简单来说,role的组织类似pypi,是ansible的功能包. ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布的role : ansible-galaxy install username.rolename 或开始创建一个新的role: ansible-galaxy init testrole 这样名称为testrole的role就初始化好了,看看它的结构: ├── defaults │ └── main.yml ├── files ├── handlers │ └── main.yml ├── meta │ └── main.yml ├── README.md ├── tasks │ └── main.yml ├── templates ├── tests │ ├── inventory │ └── test.yml └── vars └── main.yml defaults:简单说就是可以配置默认值的位置. files: 可以将你在项目中使用的任何文件,比如自定的脚本 …"/>
+        <meta property="article:published_time" content="2015-04-20" />
+            <meta property="article:section" content="Ansible" />
+            <meta property="article:author" content="wyk" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
 
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="">XGTIGER's Notes </a></h1>
-                <nav><ul>
-                    <li ><a href="/category/ansible.html">Ansible</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-        
-<section id="content" class="body">    
-<article>
-        <header> <h1 class="entry-title"><a href="ansible-kuai-su-shang-shou-role.html"
-        rel="bookmark" title="Permalink to ansible 快速上手--role">ansible 快速上手--role</a></h1>   </header>
-        <div class="entry-content">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+XGTIGER's Notes            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/category/ansible.html">Ansible</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/ansible-kuai-su-shang-shou-role.html"
+                       rel="bookmark"
+                       title="Permalink to ansible 快速上手--role">
+                        ansible 快速上手--role
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
 <footer class="post-info">
-        <abbr class="published" title="2015-04-20T18:20:00+08:00">
-                一 20 四月 2015
-        </abbr>
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-04-20T18:20:00+08:00"> 一 20 四月 2015</time>
+    </span>
 
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->        <p>让ansible 工作的真正的姿势,还是使用<a href="http://docs.ansible.com/ansible/playbooks_roles.html">role</a>
+
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <html><body><p>让ansible 工作的真正的姿势,还是使用<a href="http://docs.ansible.com/ansible/playbooks_roles.html">role</a>
 简单来说,role的组织类似pypi,是ansible的功能包.
 ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布的role :</p>
 <div class="highlight"><pre><span></span>ansible-galaxy install username.rolename
 </pre></div>
-
-
 <p>或开始创建一个新的role:</p>
 <div class="highlight"><pre><span></span>ansible-galaxy init testrole
 </pre></div>
-
-
 <p>这样名称为<em>testrole</em>的role就初始化好了,看看它的结构:</p>
 <div class="highlight"><pre><span></span>├── defaults
 │   └── main.yml
@@ -72,8 +126,6 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
 └── vars
     └── main.yml
 </pre></div>
-
-
 <ul>
 <li>defaults:简单说就是可以配置默认值的位置.</li>
 <li>files: 可以将你在项目中使用的任何文件,比如自定的脚本(远程)/安装包等等,放在这里,注意在使用这个文件时,你不需要指明路径,ansible自动处理</li>
@@ -99,22 +151,20 @@ meta:</p>
   <span class="n">license:</span> <span class="n">license</span> (<span class="n">GPLv2</span>, <span class="n">CC-BY</span>, <span class="n">etc</span>)
   <span class="n">min_ansible_version:</span> <span class="mf">1.2</span>
 </pre></div>
-
-
 <p>defaults:</p>
 <div class="highlight"><pre><span></span>---
 # defaults file for kernel
 kernel_paramiters:
     kernel.panic:
-      value: &quot;5&quot;
+      value: "5"
       # ignoreerrors: yes
     kernel.sem:
-      value: &quot;5010 641280 5010 128&quot;
+      value: "5010 641280 5010 128"
 
     kernel.shmmax:
-      value: &quot;68719476736&quot;
+      value: "68719476736"
     kernel.shmall:
-      value: &quot;4294967296&quot;
+      value: "4294967296"
     kernel.core_uses_pid:
       value: 1
     kernel.sysrq:
@@ -127,23 +177,19 @@ kernel_paramiters:
 
 ...
 </pre></div>
-
-
 <p>tasks:</p>
 <div class="highlight"><pre><span></span><span class="x">---</span>
 <span class="x"># tasks file for kernel</span>
 <span class="x">- name: KERNEL | modify file_limits</span>
-<span class="x">  command: echo &#39;*  -  nofile  10240&#39; &gt;&gt; /etc/security/limits.conf;echo &quot;ulimit -n 10240&quot; &gt;&gt;/etc/profile</span>
+<span class="x">  command: echo '*  -  nofile  10240' &gt;&gt; /etc/security/limits.conf;echo "ulimit -n 10240" &gt;&gt;/etc/profile</span>
 <span class="x">  tags: KERNEL</span>
 
 <span class="x">- name: KERNEL | modify kernel paramiters</span>
-<span class="x">  sysctl: name=&quot;</span><span class="cp">{{</span> <span class="nv">item.key</span> <span class="cp">}}</span><span class="x">&quot; value=&quot;</span><span class="cp">{{</span> <span class="nv">item.value.value</span> <span class="cp">}}</span><span class="x">&quot; state=present reload=yes ignoreerrors=yes</span>
+<span class="x">  sysctl: name="</span><span class="cp">{{</span> <span class="nv">item.key</span> <span class="cp">}}</span><span class="x">" value="</span><span class="cp">{{</span> <span class="nv">item.value.value</span> <span class="cp">}}</span><span class="x">" state=present reload=yes ignoreerrors=yes</span>
 <span class="x">  with_dict: kernel_paramiters</span>
 
 <span class="x">  tags: KERNEL</span>
 </pre></div>
-
-
 <p>比如你有一个site.yml:</p>
 <div class="highlight"><pre><span></span>---
 
@@ -159,32 +205,55 @@ kernel_paramiters:
     #- role: kernel
     - kernel
 </pre></div>
-
-
 <p>上边的三种形式都是可以的,使用下面的命令,即可完成kernel参数的调整.</p>
 <div class="highlight"><pre><span></span>ansible-playbook -i xx.ivt site.yml
-</pre></div>
-        </div><!-- /.entry-content -->
+</pre></div></body></html>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
 
-</article>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group " id="tags">
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+  </ul>
 </section>
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-        </section><!-- /#extras -->
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 wyk
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>, which takes great advantages of <a href="http://python.org">python</a>.
-                </address><!-- /#about -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
 
-                <p>The theme is by <a href="http://smashingmagazine.com">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
 
 </body>
 </html>

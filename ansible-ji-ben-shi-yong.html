@@ -1,57 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <title>ansible 基本使用</title>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
-        <link href="/" type="application/atom+xml" rel="alternate" title="XGTIGER's Notes ATOM Feed" />
+    <title>ansible 基本使用 - XGTIGER's Notes</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-        <!--[if IE]>
-                <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-        <!--[if lte IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie.css"/>
-                <script src="/js/IE8.js" type="text/javascript"></script><![endif]-->
+<link rel="canonical" href="/ansible-ji-ben-shi-yong.html">
 
-        <!--[if lt IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie6.css"/><![endif]-->
+        <meta name="author" content="wyk" />
+        <meta name="description" content="简介 ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点： agentless模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。 幂等性：不会重复执行相同的指令。例如不会重复安装软件 期望状态：只需要告诉被监控端的期望状态。 安装 pip install ansible 定义Host Inventory（主机清单） vim /etc/ansible/hosts，有以下几种可用形式: 带附属属性 [testgroup] 10.10.2.6 ansible_ssh_user=root 10.10.0.11 ansible_ssh_user=root [others] other1.example.com ansible_connection=ssh ansible_ssh_user=mpdehaan 使用pattern [webservers …" />
+
+        <meta property="og:site_name" content="XGTIGER's Notes" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="ansible 基本使用"/>
+        <meta property="og:url" content="/ansible-ji-ben-shi-yong.html"/>
+        <meta property="og:description" content="简介 ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点： agentless模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。 幂等性：不会重复执行相同的指令。例如不会重复安装软件 期望状态：只需要告诉被监控端的期望状态。 安装 pip install ansible 定义Host Inventory（主机清单） vim /etc/ansible/hosts，有以下几种可用形式: 带附属属性 [testgroup] 10.10.2.6 ansible_ssh_user=root 10.10.0.11 ansible_ssh_user=root [others] other1.example.com ansible_connection=ssh ansible_ssh_user=mpdehaan 使用pattern [webservers …"/>
+        <meta property="article:published_time" content="2014-11-28" />
+            <meta property="article:section" content="Ansible" />
+            <meta property="article:author" content="wyk" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
 
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="">XGTIGER's Notes </a></h1>
-                <nav><ul>
-                    <li ><a href="/category/ansible.html">Ansible</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-        
-<section id="content" class="body">    
-<article>
-        <header> <h1 class="entry-title"><a href="ansible-ji-ben-shi-yong.html"
-        rel="bookmark" title="Permalink to ansible 基本使用">ansible 基本使用</a></h1>   </header>
-        <div class="entry-content">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+XGTIGER's Notes            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/category/ansible.html">Ansible</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/ansible-ji-ben-shi-yong.html"
+                       rel="bookmark"
+                       title="Permalink to ansible 基本使用">
+                        ansible 基本使用
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
 <footer class="post-info">
-        <abbr class="published" title="2014-11-28T10:20:00+08:00">
-                五 28 十一月 2014
-        </abbr>
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-11-28T10:20:00+08:00"> 五 28 十一月 2014</time>
+    </span>
 
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->        <h3>简介</h3>
+
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <html><body><h3 id="jian-jie">简介</h3>
 <p>ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点：</p>
 <ul>
 <li><strong>agentless</strong>模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。</li>
 <li>幂等性：不会重复执行相同的指令。例如不会重复安装软件</li>
 <li>期望状态：只需要告诉被监控端的期望状态。</li>
 </ul>
-<h3>安装</h3>
+<h3 id="an-zhuang">安装</h3>
 <p><code>pip install ansible</code></p>
-<h3>定义Host Inventory（主机清单）</h3>
+<h3 id="ding-yi-host-inventoryzhu-ji-qing-dan">定义Host Inventory（主机清单）</h3>
 <p>vim /etc/ansible/hosts，有以下几种可用形式:</p>
 <ul>
 <li>带附属属性 </li>
@@ -62,8 +120,6 @@
 [others]
 other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
 </pre></div>
-
-
 <ul>
 <li>使用pattern</li>
 </ul>
@@ -72,8 +128,6 @@ other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
 <span class="k">[databases]</span>
 <span class="err">db-[a:f].example.com</span>
 </pre></div>
-
-
 <ul>
 <li>针对group的vars</li>
 </ul>
@@ -86,8 +140,6 @@ other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
 <span class="na">ntp_server</span><span class="o">=</span><span class="s">ntp.atlanta.example.com</span>
 <span class="na">proxy</span><span class="o">=</span><span class="s">proxy.atlanta.example.com</span>
 </pre></div>
-
-
 <ul>
 <li>更大的组 ，组vars</li>
 </ul>
@@ -111,8 +163,6 @@ other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
 <span class="err">southwest</span>
 <span class="err">northwest</span>
 </pre></div>
-
-
 <ul>
 <li>附可用属性列表</li>
 </ul>
@@ -131,145 +181,144 @@ ansible_sudo_pass
 ansible_sudo_exe (new in version 1.8)
   The sudo command path.
 ansible_connection
-  Connection type of the host. Candidates are local, ssh or paramiko. The default is paramiko before Ansible 1.2, and &#39;smart&#39; afterwards which detects whether usage of &#39;ssh&#39; would be feasible based on whether ControlPersist is supported.
+  Connection type of the host. Candidates are local, ssh or paramiko. The default is paramiko before Ansible 1.2, and 'smart' afterwards which detects whether usage of 'ssh' would be feasible based on whether ControlPersist is supported.
 ansible_ssh_private_key_file
-  Private key file used by ssh. Useful if using multiple keys and you don&#39;t want to use SSH agent.
+  Private key file used by ssh. Useful if using multiple keys and you don't want to use SSH agent.
 ansible_shell_type
-  The shell type of the target system. By default commands are formatted using &#39;sh&#39;-style syntax by default. Setting this to &#39;csh&#39; or &#39;fish&#39; will cause commands executed on target systems to follow those shell&#39;s syntax instead.
+  The shell type of the target system. By default commands are formatted using 'sh'-style syntax by default. Setting this to 'csh' or 'fish' will cause commands executed on target systems to follow those shell's syntax instead.
 ansible_python_interpreter
   The target host python path. This is useful for systems with more
-  than one Python or not located at &quot;/usr/bin/python&quot; such as \*BSD, or where /usr/bin/python
-  is not a 2.X series Python. We do not use the &quot;/usr/bin/env&quot; mechanism as that requires the remote user&#39;s
-  path to be set right and also assumes the &quot;python&quot; executable is named python, where the executable might
-  be named something like &quot;python26&quot;.
+  than one Python or not located at "/usr/bin/python" such as \*BSD, or where /usr/bin/python
+  is not a 2.X series Python. We do not use the "/usr/bin/env" mechanism as that requires the remote user's
+  path to be set right and also assumes the "python" executable is named python, where the executable might
+  be named something like "python26".
 ansible\_\*\_interpreter
   Works for anything such as ruby or perl and works just like ansible_python_interpreter.
   This replaces shebang of modules which will run on that host.
 </pre></div>
-
-
-<h3>使用范例</h3>
+<h3 id="shi-yong-fan-li">使用范例</h3>
 <p>最常用的用法 
-ansible <Host-partten> -m MOD -a 'args'</p>
+ansible <host-partten> -m MOD -a 'args'</host-partten></p>
 <ul>
 <li>查看所有支持的模块：</li>
 </ul>
 <div class="highlight"><pre><span></span>ansible-doc -l 
 </pre></div>
-
-
 <ul>
 <li>查看某个模块的文档：</li>
 </ul>
 <div class="highlight"><pre><span></span>ansible-doc yum
 </pre></div>
-
-
 <ul>
 <li>导入管理员KEY</li>
 </ul>
-<div class="highlight"><pre><span></span>ansible 10.10.2.6 -m shell -a &#39;echo &quot;ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA5k2RQBtZOpgADIELw4mtBe61bOX09spz/Z+4yjQN/bR68FPyQXk2sQWEt8gWUx2SB3xNLOWe1LF2bpcaTPE5VLHsg1AORiwzTVNDvtMtLWo150t5QOYzvXUIPcPEgPgaMoMB4fJ5+xhIEwYwA6PJrFObsB/SWThIkXVZmaKtVRIywP1KZqyRpfXm3jzw1BL4iBW56HMorM+0Mq9tZTx/Cv+A8/aFzHInbQbC//rhJgV1k+v7DMdG5co6CExW/CuuDcbJOh8+jJdspT1GqocMMIIWhP56m1iqJv7DZqy7xrPiPUTy6M5Ri7qLAcCx3N+hZTf0tjtjbkQDm88sM82hUQ== 10.2.1.11&quot;&gt;&gt;/home/admin/.ssh/authorized_keys&#39;
+<div class="highlight"><pre><span></span>ansible 10.10.2.6 -m shell -a 'echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA5k2RQBtZOpgADIELw4mtBe61bOX09spz/Z+4yjQN/bR68FPyQXk2sQWEt8gWUx2SB3xNLOWe1LF2bpcaTPE5VLHsg1AORiwzTVNDvtMtLWo150t5QOYzvXUIPcPEgPgaMoMB4fJ5+xhIEwYwA6PJrFObsB/SWThIkXVZmaKtVRIywP1KZqyRpfXm3jzw1BL4iBW56HMorM+0Mq9tZTx/Cv+A8/aFzHInbQbC//rhJgV1k+v7DMdG5co6CExW/CuuDcbJOh8+jJdspT1GqocMMIIWhP56m1iqJv7DZqy7xrPiPUTy6M5Ri7qLAcCx3N+hZTf0tjtjbkQDm88sM82hUQ== 10.2.1.11"&gt;&gt;/home/admin/.ssh/authorized_keys'
 </pre></div>
-
-
 <p>或者</p>
-<div class="highlight"><pre><span></span>ansible -m &#39;copy&#39; -a &#39;src=/root/.ssh/id_rsa.pub dest=/root&#39; testgroup --ask-pass
-ansible -m &#39;shell&#39; -a &#39;cat /root/id_rsa.pub &gt;&gt; .ssh/authorized_keys&#39; testgroup --ask-pass
+<div class="highlight"><pre><span></span>ansible -m 'copy' -a 'src=/root/.ssh/id_rsa.pub dest=/root' testgroup --ask-pass
+ansible -m 'shell' -a 'cat /root/id_rsa.pub &gt;&gt; .ssh/authorized_keys' testgroup --ask-pass
 </pre></div>
-
-
 <ul>
 <li>使用sudo</li>
 </ul>
-<div class="highlight"><pre><span></span>ansible testgroup -m shell -a &#39;date&#39; -u username(os user1) -U otheruser(sudo to user2) [--ask-sudo-pass]
+<div class="highlight"><pre><span></span>ansible testgroup -m shell -a 'date' -u username(os user1) -U otheruser(sudo to user2) [--ask-sudo-pass]
 </pre></div>
-
-
 <ul>
 <li>使用yum:</li>
 </ul>
-<div class="highlight"><pre><span></span>ansible -m &#39;yum&#39; -a &quot;name=vsftpd state=present&quot; testgroup #确定已经安装，但不要更新它
-ansible webservers -m yum -a &quot;name=acme-1.5 state=present&quot; #确定已经安装，版本是1.5
-ansible webservers -m yum -a &quot;name=acme state=latest&quot; testgroup  #安装到最新
-ansible webservers -m yum -a &quot;name=acme state=absent&quot; #确认不要安装（移除）
+<div class="highlight"><pre><span></span>ansible -m 'yum' -a "name=vsftpd state=present" testgroup #确定已经安装，但不要更新它
+ansible webservers -m yum -a "name=acme-1.5 state=present" #确定已经安装，版本是1.5
+ansible webservers -m yum -a "name=acme state=latest" testgroup  #安装到最新
+ansible webservers -m yum -a "name=acme state=absent" #确认不要安装（移除）
 </pre></div>
-
-
 <ul>
 <li>管理用户</li>
 </ul>
-<div class="highlight"><pre><span></span>ansible all -m user -a &quot;name=foo password=&lt;crypted password here&gt;&quot; #新增或改密码
-ansible all -m user -a &quot;name=foo state=absent&quot; #删除用户
+<div class="highlight"><pre><span></span>ansible all -m user -a "name=foo password=&lt;crypted password here&gt;" #新增或改密码
+ansible all -m user -a "name=foo state=absent" #删除用户
 </pre></div>
-
-
 <ul>
 <li>使用service</li>
 </ul>
-<div class="highlight"><pre><span></span>ansible -m &#39;service&#39; -a &#39;name=vsftpd state=started enabled=yes&#39; 10.10.2.6 #启动并chkconfig on
-ansible webservers -m service -a &quot;name=httpd state=restarted #重启
-ansible webservers -m service -a &quot;name=httpd state=stopped&quot; #关闭
+<div class="highlight"><pre><span></span>ansible -m 'service' -a 'name=vsftpd state=started enabled=yes' 10.10.2.6 #启动并chkconfig on
+ansible webservers -m service -a "name=httpd state=restarted #重启
+ansible webservers -m service -a "name=httpd state=stopped" #关闭
 </pre></div>
-
-
 <ul>
 <li>传送文件：</li>
 </ul>
-<div class="highlight"><pre><span></span>ansible testgroup -m copy -a &quot;src=/etc/hosts dest=/tmp/hosts&quot;
+<div class="highlight"><pre><span></span>ansible testgroup -m copy -a "src=/etc/hosts dest=/tmp/hosts"
 </pre></div>
-
-
 <ul>
 <li>修改文件属性：</li>
 </ul>
-<div class="highlight"><pre><span></span>ansible *2.6 -m &#39;file&#39; -a &#39;dest=/root/aaa mode=600 owner=admin group=wheel&#39;
+<div class="highlight"><pre><span></span>ansible *2.6 -m 'file' -a 'dest=/root/aaa mode=600 owner=admin group=wheel'
 </pre></div>
-
-
 <ul>
 <li>也能创建文件夹</li>
 </ul>
-<div class="highlight"><pre><span></span> ansible webservers -m file -a &quot;dest=/path/to/c mode=755 owner=mdehaan group=mdehaan state=directory&quot;
+<div class="highlight"><pre><span></span> ansible webservers -m file -a "dest=/path/to/c mode=755 owner=mdehaan group=mdehaan state=directory"
 </pre></div>
-
-
 <ul>
 <li>从git部署程序服务</li>
 </ul>
-<div class="highlight"><pre><span></span>ansible webservers -m git -a &quot;repo=git://foo.example.org/repo.git dest=/srv/myapp version=HEAD&quot;#Since Ansible modules can notify change handlers it is possible to tell Ansible to run specific tasks when the code is updated, such as deploying Perl/Python/PHP/Ruby directly from git and then restarting apache.
+<div class="highlight"><pre><span></span>ansible webservers -m git -a "repo=git://foo.example.org/repo.git dest=/srv/myapp version=HEAD"#Since Ansible modules can notify change handlers it is possible to tell Ansible to run specific tasks when the code is updated, such as deploying Perl/Python/PHP/Ruby directly from git and then restarting apache.
 </pre></div>
-
-
 <ul>
 <li>限定时间的后台执行：</li>
 </ul>
-<div class="highlight"><pre><span></span> ansible all -B 3600 -P 0 -a &quot;/usr/bin/long_running_operation --do-stuff&quot; #最多执行60分钟，不检查执行状态
-ansible web1.example.com -m async_status -a &quot;jid=488359678239.2844&quot;  #使用async_status模块检查之前放后台的job id的执行状态。
-ansible all -B 1800 -P 60 -a &quot;/usr/bin/long_running_operation --do-stuff&quot; #最多执行30分钟，60秒轮训检查执行状态一次。
+<div class="highlight"><pre><span></span> ansible all -B 3600 -P 0 -a "/usr/bin/long_running_operation --do-stuff" #最多执行60分钟，不检查执行状态
+ansible web1.example.com -m async_status -a "jid=488359678239.2844"  #使用async_status模块检查之前放后台的job id的执行状态。
+ansible all -B 1800 -P 60 -a "/usr/bin/long_running_operation --do-stuff" #最多执行30分钟，60秒轮训检查执行状态一次。
 #当-B 指定的时间耗尽，该远程执行的命令会被终止。注意copy模块不适用后台运行的模式。
 #可以使用--forks指定并发的进程数，以快速在所有选定的目标机器启动job
-</pre></div>
-        </div><!-- /.entry-content -->
+</pre></div></body></html>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
 
-</article>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group " id="tags">
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+  </ul>
 </section>
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-        </section><!-- /#extras -->
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 wyk
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>, which takes great advantages of <a href="http://python.org">python</a>.
-                </address><!-- /#about -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
 
-                <p>The theme is by <a href="http://smashingmagazine.com">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
 
 </body>
 </html>

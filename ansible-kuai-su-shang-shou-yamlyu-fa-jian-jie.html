@@ -1,77 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <title>ansible 快速上手--yaml语法简介</title>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
-        <link href="/" type="application/atom+xml" rel="alternate" title="XGTIGER's Notes ATOM Feed" />
+    <title>ansible 快速上手--yaml语法简介 - XGTIGER's Notes</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-        <!--[if IE]>
-                <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-        <!--[if lte IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie.css"/>
-                <script src="/js/IE8.js" type="text/javascript"></script><![endif]-->
+<link rel="canonical" href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html">
 
-        <!--[if lt IE 7]>
-                <link rel="stylesheet" type="text/css" media="all" href="/css/ie6.css"/><![endif]-->
+        <meta name="author" content="wyk" />
+        <meta name="description" content="假定您有某种编程语言的基础或至少了解数组、HASH结构。 yaml类似python语言，有严格的缩进要求，一般是两个空格作为缩进比例。 列表和字典 列表的所有元素均使用“-”打头例如: - Apple - Orange - Strawberry - Mango 字典通过key与valuef进行标识例如 : name: Example Developer job: Developer skill: Elite 或 {name: Example Developer, job: Developer, skill: Elite} ymal中的变量 在 yaml 中可以使用vars关键字来定义变量 ： vars: var_name: value 变量的引用 : - name: add several users vars: user1: testuser1 user2: testuser2 user: name={{ user1 }} state=present …" />
+
+        <meta property="og:site_name" content="XGTIGER's Notes" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="ansible 快速上手--yaml语法简介"/>
+        <meta property="og:url" content="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html"/>
+        <meta property="og:description" content="假定您有某种编程语言的基础或至少了解数组、HASH结构。 yaml类似python语言，有严格的缩进要求，一般是两个空格作为缩进比例。 列表和字典 列表的所有元素均使用“-”打头例如: - Apple - Orange - Strawberry - Mango 字典通过key与valuef进行标识例如 : name: Example Developer job: Developer skill: Elite 或 {name: Example Developer, job: Developer, skill: Elite} ymal中的变量 在 yaml 中可以使用vars关键字来定义变量 ： vars: var_name: value 变量的引用 : - name: add several users vars: user1: testuser1 user2: testuser2 user: name={{ user1 }} state=present …"/>
+        <meta property="article:published_time" content="2014-11-28" />
+            <meta property="article:section" content="Ansible" />
+            <meta property="article:author" content="wyk" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
 
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="">XGTIGER's Notes </a></h1>
-                <nav><ul>
-                    <li ><a href="/category/ansible.html">Ansible</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-        
-<section id="content" class="body">    
-<article>
-        <header> <h1 class="entry-title"><a href="ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html"
-        rel="bookmark" title="Permalink to ansible 快速上手--yaml语法简介">ansible 快速上手--yaml语法简介</a></h1>   </header>
-        <div class="entry-content">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+XGTIGER's Notes            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/category/ansible.html">Ansible</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html"
+                       rel="bookmark"
+                       title="Permalink to ansible 快速上手--yaml语法简介">
+                        ansible 快速上手--yaml语法简介
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
 <footer class="post-info">
-        <abbr class="published" title="2014-11-28T14:20:00+08:00">
-                五 28 十一月 2014
-        </abbr>
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-11-28T14:20:00+08:00"> 五 28 十一月 2014</time>
+    </span>
 
-        <address class="vcard author">
-                By <a class="url fn" href="/author/wyk.html">wyk</a>
-        </address>
-<p>In <a href="/category/ansible.html">Ansible</a>. </p>
-</p>
-</footer><!-- /.post-info -->        <p>假定您有某种编程语言的基础或至少了解数组、HASH结构。
+
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <html><body><p>假定您有某种编程语言的基础或至少了解数组、HASH结构。
 yaml类似python语言，有严格的缩进要求，一般是两个空格作为缩进比例。</p>
-<h2>列表和字典</h2>
-<p>列表的所有元素均使用“-”打头例如:</p>
+<h2 id="lie-biao-he-zi-dian">列表和字典</h2>
+<p>列表的所有元素均使用&ldquo;-&rdquo;打头例如:</p>
 <div class="highlight"><pre><span></span>- Apple 
 - Orange 
 - Strawberry 
 - Mango
 </pre></div>
-
-
 <p>字典通过key与valuef进行标识例如 :</p>
 <div class="highlight"><pre><span></span><span class="n">name</span><span class="o">:</span> <span class="n">Example</span> <span class="n">Developer</span> 
 <span class="n">job</span><span class="o">:</span> <span class="n">Developer</span> 
 <span class="n">skill</span><span class="o">:</span> <span class="n">Elite</span> 
 </pre></div>
-
-
 <p>或</p>
 <div class="highlight"><pre><span></span>{name: Example Developer, job: Developer, skill: Elite}  
 </pre></div>
-
-
-<h2>ymal中的变量</h2>
+<h2 id="ymalzhong-de-bian-liang">ymal中的变量</h2>
 <p>在 yaml 中可以使用vars关键字来定义变量 ：</p>
 <div class="highlight"><pre><span></span><span class="n">vars</span><span class="o">:</span> 
 <span class="n">var_name</span><span class="o">:</span> <span class="n">value</span>  
 </pre></div>
-
-
 <p>变量的引用 :</p>
 <div class="highlight"><pre><span></span><span class="x">- name: add several users </span>
 <span class="x">vars: </span>
@@ -80,8 +130,6 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
 <span class="x">user: name=</span><span class="cp">{{</span> <span class="nv">user1</span> <span class="cp">}}</span><span class="x"> state=present groups=wheel</span>
 <span class="x">user: name=</span><span class="cp">{{</span> <span class="nv">user2</span> <span class="cp">}}</span><span class="x"> state=present groups=wheel</span>
 </pre></div>
-
-
 <p>使用迭代方式 :</p>
 <ul>
 <li>with_nested</li>
@@ -89,11 +137,9 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
 <div class="highlight"><pre><span></span><span class="x">- name: give users access to multiple databases</span>
 <span class="x">  mysql_user: name=</span><span class="cp">{{</span> <span class="nv">item</span><span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="cp">}}</span><span class="x"> priv=</span><span class="cp">{{</span> <span class="nv">item</span><span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="cp">}}</span><span class="x">.*:ALL append_privs=yes password=foo</span>
 <span class="x">  with_nested:</span>
-<span class="x">    - [ &#39;alice&#39;, &#39;bob&#39; ]</span>
-<span class="x">    - [ &#39;clientdb&#39;, &#39;employeedb&#39;, &#39;providerdb&#39; ]</span>
+<span class="x">    - [ 'alice', 'bob' ]</span>
+<span class="x">    - [ 'clientdb', 'employeedb', 'providerdb' ]</span>
 </pre></div>
-
-
 <ul>
 <li>with_items</li>
 </ul>
@@ -103,17 +149,13 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
 <span class="x">    - testuser1  </span>
 <span class="x">    - testuser2 </span>
 </pre></div>
-
-
 <p>事实上with_items中可以使用元素还可为hashes例如 :</p>
 <div class="highlight"><pre><span></span><span class="x">- name: add several users </span>
 <span class="x">  user: name=</span><span class="cp">{{</span> <span class="nv">item.name</span> <span class="cp">}}</span><span class="x"> state=present groups=</span><span class="cp">{{</span> <span class="nv">item.groups</span> <span class="cp">}}</span><span class="x"> </span>
 <span class="x">  with_items: </span>
-<span class="x">    - { name: &#39;testuser1&#39;, groups: &#39;wheel&#39; } </span>
-<span class="x">    - { name: &#39;testuser2&#39;, groups: &#39;root&#39; } </span>
+<span class="x">    - { name: 'testuser1', groups: 'wheel' } </span>
+<span class="x">    - { name: 'testuser2', groups: 'root' } </span>
 </pre></div>
-
-
 <ul>
 <li>hash</li>
 </ul>
@@ -127,11 +169,9 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
 
 <span class="n">tasks</span><span class="o">:</span>
   <span class="o">-</span> <span class="n">name</span><span class="o">:</span> <span class="n">Print</span> <span class="n">phone</span> <span class="n">records</span>
-    <span class="n">debug</span><span class="o">:</span> <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;User {{ item.key }} is {{ item.value.name }} ({{ item.value.telephone }})&quot;</span>
+    <span class="n">debug</span><span class="o">:</span> <span class="n">msg</span><span class="o">=</span><span class="s2">"User {{ item.key }} is {{ item.value.name }} ({{ item.value.telephone }})"</span>
     <span class="n">with_dict</span><span class="o">:</span> <span class="n">users</span>
 </pre></div>
-
-
 <ul>
 <li>Looping over Fileglobs</li>
 </ul>
@@ -146,28 +186,53 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
 <span class="x">    - copy: src=</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x"> dest=/etc/fooapp/ owner=root mode=600</span>
 <span class="x">      with_fileglob:</span>
 <span class="x">        - /playbooks/files/fooapp/*</span>
-</pre></div>
-        </div><!-- /.entry-content -->
+</pre></div></body></html>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
 
-</article>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group " id="tags">
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+  </ul>
 </section>
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-        </section><!-- /#extras -->
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 wyk
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>, which takes great advantages of <a href="http://python.org">python</a>.
-                </address><!-- /#about -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
 
-                <p>The theme is by <a href="http://smashingmagazine.com">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
 
 </body>
 </html>
