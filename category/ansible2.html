@@ -29,7 +29,445 @@
         
         
         <aside id="featured" class="body"><article>
-                <h1 class="entry-title"><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></h1> 
+                <h1 class="entry-title"><a href="/ru-he-zai-da-gui-mo-shu-ju-ku-guan-li-zhong-shi-yong-ansible.html">如何在大规模数据库管理中使用ANSIBLE</a></h1> 
+<footer class="post-info">
+        <abbr class="published" title="2017-06-24T19:10:00+08:00">
+                六 24 六月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By <a class="url fn" href="/author/wyk.html">wyk</a>
+        </address>
+<p>In <a href="/category/ansible.html">Ansible</a>. </p>
+</p>
+</footer><!-- /.post-info -->                <h1>介绍</h1>
+<p><a href="http://docs.ansible.com/ansible/">Ansible</a> ,现在不只是一个配置管理和应用部署工具，2.2版本更是增加了对<a href="https://zh.wikipedia.org/wiki/%E7%BC%96%E9%85%8D_(%E8%AE%A1%E7%AE%97%E6%9C%BA)">编排</a>的支持,2.0版本经过了代码的完全重构，全面支持可扩展的插件系统，便于使用者通过实现各种功能插件来满足自己的需求。Ansible 的作者Michael DeHaan 同时也是知名软件 Cobbler 与 Func 的作者。</p>
+<p>Ansible的模块设计,遵循<a href="https://zh.wikipedia.org/wiki/%E5%86%AA%E7%AD%89">幂等性</a>的原则,在使用playbook的过程中，你将更清晰的体会到这一特点。</p>
+<p>Ansible 的常被用于如下（但不限于）几个场景：</p>
+<ul>
+<li>
+<p>自动化部署应用</p>
+</li>
+<li>
+<p>自动化配置管理</p>
+</li>
+<li>
+<p>自动化的持续交付</p>
+</li>
+</ul>
+<p>同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless，即 Ansible 没有类似saltstack的agent部署需求，相对灵活简便;缺点也存在，比如执行响应的开销相对大.其实没那么明显，与您常用的ssh指令相当，而且Ansible可使用扩展(如ZeroMQ）来提升执行效率。</p>
+<p>同类工具系统简单的对比：
+| 框架名称 | Ansible | Saltstack |  Puppet |
+|-------------|------------|---------------|------------|
+| 开发语言 | Python | Python| Ruby |
+| 是否有客户端 | 无 | 有 |  有 |
+| 服务器与远程机器是否相互验证 | 是 | 是 | 是 |
+| 服务器与远程机器通信是否加密 | 是，使用 OpenSSH | 是，使用 AES 加密 |  是，标准 SSL 协议 |
+| 平台支持 | 支持 AIX、BSD、 HP-UX、 Linux、Mac OSX、Solaris | 支持 BSD、Linux、Mac OS X、Solaris、 Windows | 支持 AIX、BSD、HP-UX、Linux、 MacOSX、Solaris、 Windows |
+| 配置文件格式 | YAML | YAML | Ruby 语法格式 |
+| 命令行执行 | 支持 | 支持 | 不支持，但可通过配置模块实现 |</p>
+<p>值得注意的是，Ansible2.0版本后，增强了对WINDOWS服务器的管理支持，但自身依然不支持以WIN主机作管理节点。</p>
+<p>本文通过若干范例,介绍下如何在大规模的数据库集群管理中使用Ansible.现在只需要将 Ansible部署于一台管理节点（在Docker上运行是没问题的，官方<a href="https://hub.docker.com/r/ansible/ansible/">镜像</a> )，便可开始Ansible探索之旅 。</p>
+<h1>重要概念</h1>
+<ul>
+<li><a href="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a>:即Ansible使用的主机清单。如还没有概念,可参考我的另一篇<a href="http://www.zuodba.com/ansible-ji-ben-shi-yong.html">《基本使用》</a>来快速熟悉下.</li>
+<li><a href="http://docs.ansible.com/ansible/playbooks.html">Playbook</a> :ansible的主要工作形式,可参考我的几篇<a href="http://www.zuodba.com/ansible-kuai-su-shang-shou.html">《Playbook简介》</a>快速熟悉下.</li>
+<li><a href="http://docs.ansible.com/ansible/modules.html">Module</a> :ansible的功能基本单元,数量一直在不断增长,目前官方收入的均由python语言编写,但其实可由任何语言完成.所有的模块列表请见<a href="http://docs.ansible.com/ansible/list_of_all_modules.html">这里</a>.</li>
+</ul>
+<h1>基本的MYSQL管理模块</h1>
+<ul>
+<li>mysql_user:管理用户及授权</li>
+<li>host_all:是不是对该名字的所有的主机进行操作,但不能在创建用户时使用</li>
+<li>priv:*.*:SELECT的形式</li>
+</ul>
+<div class="highlight"><pre><span></span>#去除所有匿名用户
+- mysql_user:
+    name: &#39;&#39;
+    host_all: yes
+    state: absent
+
+    #创建具备所有库权限的用户bob,密码12345或使用mysql的HASH形式
+
+- mysql_user:
+    name: bob
+    password: 12345
+    priv: &#39;*.*:ALL&#39;
+    state: present
+- mysql_user:
+    name: bob
+    password: &#39;*EE0D72C1085C46C5278932678FBE2C6A782821B4&#39;
+    encrypted: yes
+    priv: &#39;*.*:ALL&#39;
+    state: present
+
+    #范例:移除所有名为sally用户
+
+- mysql_user:
+name: sally
+host_all: yes
+    state: absent
+</pre></div>
+
+
+<ul>
+<li>mysql_db: 管理数据库的创建/移除/备份/导入</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">    #创建一个数据库</span>
+<span class="x">- name: Create a new database with name &#39;bobdata&#39;</span>
+<span class="x">  mysql_db:</span>
+<span class="x">    name: bobdata</span>
+<span class="x">    state: present</span>
+
+<span class="x">  #逻辑备份所有数据</span>
+<span class="x">- name: Dump all databases to hostname.sql</span>
+<span class="x">  mysql_db:</span>
+<span class="x">    state: dump</span>
+<span class="x">    name: all</span>
+<span class="x">    target: /tmp/</span><span class="cp">{{</span> <span class="nv">inventory_hostname</span> <span class="cp">}}</span><span class="x">.sql</span>
+<span class="x">  #导入SQL脚本</span>
+<span class="x">- name: Import file.sql similar to mysql -u &lt;username&gt; -p &lt;password&gt; &lt; hostname.sql</span>
+<span class="x">  mysql_db:</span>
+<span class="x">    state: import</span>
+<span class="x">    name: all</span>
+<span class="x">    target: /tmp/</span><span class="cp">{{</span> <span class="nv">inventory_hostname</span> <span class="cp">}}</span><span class="x">.sql</span>
+</pre></div>
+
+
+<ul>
+<li>mysql_variables: 管理运行中MYSQL的全局变量,如果有重启复制线程的需求,配合mysql_replication可实现</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">#管理MYSQL的变量,根据需要可控是否重启复制线程</span>
+<span class="x">---</span>
+<span class="x">- hosts: all</span>
+<span class="x">  vars:</span>
+<span class="x">    restart_replication: &quot;</span><span class="cp">{{</span> <span class="nv">restart_repl</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;no&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">  vars_prompt:</span>
+<span class="x">    - name: &quot;login_password&quot;</span>
+<span class="x">      prompt: &quot;mysql login password&quot;</span>
+<span class="x">  tasks:</span>
+<span class="x">    - name: stop slave when needed</span>
+<span class="x">      mysql_replication:</span>
+<span class="x">        login_host: &quot;</span><span class="cp">{{</span><span class="nv">login_host</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        login_port: &quot;</span><span class="cp">{{</span><span class="nv">login_port</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="m">3358</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        login_user: &quot;</span><span class="cp">{{</span> <span class="nv">login_user</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;root&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        login_password: &quot;</span><span class="cp">{{</span> <span class="nv">login_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        mode: &quot;stopslave&quot;</span>
+<span class="x">      when: restart_replication ==&#39;yes&#39;</span>
+<span class="x">    - name: manage mysql variables</span>
+<span class="x">      mysql_variables:</span>
+<span class="x">        login_host: &quot;</span><span class="cp">{{</span><span class="nv">login_host</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        login_port: &quot;</span><span class="cp">{{</span><span class="nv">login_port</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="m">3358</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        login_user: &quot;</span><span class="cp">{{</span> <span class="nv">login_user</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;root&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        login_password: &quot;</span><span class="cp">{{</span> <span class="nv">login_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        variable: &quot;</span><span class="cp">{{</span> <span class="nv">variable</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        value: &quot;</span><span class="cp">{{</span> <span class="nv">value</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    - name: start slave when needed</span>
+<span class="x">      mysql_replication:</span>
+<span class="x">        login_host: &quot;</span><span class="cp">{{</span><span class="nv">login_host</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        login_port: &quot;</span><span class="cp">{{</span><span class="nv">login_port</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="m">3358</span><span class="o">)</span><span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        login_user: &quot;</span><span class="cp">{{</span> <span class="nv">login_user</span><span class="o">|</span><span class="nf">default</span><span class="o">(</span><span class="s1">&#39;root&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        login_password: &quot;</span><span class="cp">{{</span> <span class="nv">login_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        mode: &quot;startslave&quot;</span>
+<span class="x">      when: restart_replication == &#39;yes&#39;</span>
+</pre></div>
+
+
+<ul>
+<li>mysql_replication: 管理主从复制,开启/停止复制线程/获取复制信息等等</li>
+</ul>
+<div class="highlight"><pre><span></span># 停止复制线程
+- mysql_replication:
+    mode: stopslave
+
+# 获取主库的复制坐标
+- mysql_replication:
+    mode: getmaster
+
+# change master
+- mysql_replication:
+    mode: changemaster
+    master_host: 192.0.2.1
+    master_log_file: mysql-bin.000009
+    master_log_pos: 4578
+
+# 检查ansible.example.com的复制状态
+
+- mysql_replication:
+    mode: getslave
+    login_host: ansible.example.com
+    login_port: 3308
+</pre></div>
+
+
+<h1>编写role和playbook实现自定义功能</h1>
+<p>playbook和role才是使用ansible的正确姿势，参考<a href="http://www.zuodba.com/ansible-kuai-su-shang-shou-role.html">Role的使用</a>
+这里通过编写一个role来完成一个通用的mysql的部署功能:
+目录结构如下:</p>
+<div class="highlight"><pre><span></span>mysql_install
+├── defaults
+│   └── main.yml
+├── files
+│   └── install.sh
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── README.md
+├── tasks
+│   ├── generate_mysqld_script.yml
+│   ├── init.yml
+│   ├── main.yml
+│   ├── setup_Debian.yml
+│   ├── setup_from_source.yml
+│   └── setup_RedHat.yml
+├── templates
+│   ├── my5.5.cnf.j2
+│   ├── my.cnf.j2
+│   └── mysqld.j2
+└── vars
+    ├── Debian.yml
+    ├── From_source.yml
+    ├── main.yml
+    └── Redhat.ym
+</pre></div>
+
+
+<p>我们着重关注task部分,因为这是主要的功能实现部分.
+入口是main.yml,基本逻辑是:
+1.如果不使用源码安装,则根据目标OS的类型从其对应源另安装,这里使用了<em>include</em>,使用结构更清晰:</p>
+<div class="highlight"><pre><span></span><span class="x">#setup a mysqld</span>
+<span class="x">---</span>
+<span class="x">- name: Include OS-specific variables.</span>
+<span class="x">  include_vars: &quot;</span><span class="cp">{{</span> <span class="nv">ansible_os_family</span> <span class="cp">}}</span><span class="x">.yml&quot;</span>
+<span class="x">  when: not mysql_install_from_source</span>
+
+<span class="x">- include: setup_from_source.yml</span>
+<span class="x">  when: mysql_install_from_source and do_install</span>
+
+<span class="x">- include: setup_RedHat.yml</span>
+<span class="x">  when: not mysql_install_from_source  and ansible_os_family == &#39;RedHat&#39; and do_</span>
+<span class="x">install</span>
+
+<span class="x">- include: setup_Debian.yml</span>
+<span class="x">  when: not mysql_install_from_source  and ansible_os_family == &#39;Debian&#39; and do_</span>
+<span class="x">install</span>
+
+<span class="x">- include: init.yml</span>
+</pre></div>
+
+
+<p>这里我们只看在REDHAT系统的安装过程,这里首先检查是否已经安装过了MYSQL,只有否才会进行安装及初始化数据目录:</p>
+<div class="highlight"><pre><span></span><span class="x">---</span>
+<span class="x">- name: INSTALL ON REDHAT | Check if MySQL is already installed.</span>
+<span class="x">  stat: path=/etc/init.d/mysqld</span>
+<span class="x">  register: mysql_installed</span>
+
+<span class="x">- name: INSTALL ON REDHAT | add mysql repo from mysql.com</span>
+<span class="x">  yum:</span>
+<span class="x">    name: &quot;http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm&quot;</span>
+<span class="x">    state: present</span>
+<span class="x">  when: mysql_installed.stat.exists == false</span>
+
+<span class="x">- name: INSTALL ON REDHAT | ensure MySQL packages are installed</span>
+<span class="x">  yum:</span>
+<span class="x">    name: &quot;</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    state: installed</span>
+<span class="x">  with_items: &quot;</span><span class="cp">{{</span><span class="nv">mysql_packages</span><span class="cp">}}</span><span class="x">&quot;</span>
+
+<span class="x">- name: INSTALL ON REDHAT | init datadir</span>
+<span class="x">  shell: &quot;mysql_install_db --user=</span><span class="cp">{{</span><span class="nv">mysql_user</span><span class="cp">}}</span><span class="x"> --datadir=</span><span class="cp">{{</span><span class="nv">mysql_datadir</span><span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">  when: mysql_installed.stat.exists == false</span>
+</pre></div>
+
+
+<p>然后,无论是什么系统类型,task流程都会走到init这里.做了几件事:
+<em> 生成mysqld 服务控制脚本
+</em> 生成服务配置
+<em> 启动mysql服务
+</em> 清理匿名用户
+<em> 为root用户设置密码
+</em> 使用服务开机启动
+当然可以做的更详细,这里仅为了演示.</p>
+<div class="highlight"><pre><span></span><span class="x"># init a mysql instance</span>
+<span class="x">---</span>
+
+<span class="x">- name: generate mysqld script</span>
+<span class="x">  template:</span>
+<span class="x">    src: mysqld.j2</span>
+<span class="x">    dest: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_initd</span> <span class="cp">}}</span><span class="x">/</span><span class="cp">{{</span> <span class="nv">mysql_daemon</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    owner: root</span>
+<span class="x">    group: root</span>
+<span class="x">    mode: 0744</span>
+<span class="x">    backup: yes</span>
+<span class="x">  tags: generate_mysqld_script</span>
+
+<span class="x">- name: Copy my.cnf</span>
+<span class="x">  template:</span>
+<span class="x">    src: my.cnf.j2</span>
+<span class="x">    dest: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_conf_file</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    owner: root</span>
+<span class="x">    group: root</span>
+<span class="x">    mode: 644</span>
+<span class="x">  notify: restart mysql</span>
+
+<span class="x">- name: make mysqld started</span>
+<span class="x">  service:</span>
+<span class="x">    name: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_daemon</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    state: started</span>
+
+<span class="x">- name: Delete anonymous user.</span>
+<span class="x">  mysql_user:</span>
+<span class="x">    name: &quot;&quot;</span>
+<span class="x">    state: absent</span>
+<span class="x">    login_user: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_root_username</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    login_password: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_root_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    check_implicit_admin: true</span>
+
+<span class="x">- name: set MySQL root password for all hosts.</span>
+<span class="x">  mysql_user:</span>
+<span class="x">    name: root</span>
+<span class="x">    password: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_root_password</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    login_user: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_root_username</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    login_password: &quot;&quot;</span>
+<span class="x">    check_implicit_admin: true</span>
+<span class="x">    host_all: yes</span>
+
+<span class="x">- name: enable mysql daemon on os start</span>
+<span class="x">  service:</span>
+<span class="x">    name: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_daemon</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">    enabled: &quot;</span><span class="cp">{{</span> <span class="nv">mysql_daemon_enabled_on_os_start</span> <span class="cp">}}</span><span class="x">&quot;</span>
+</pre></div>
+
+
+<p>注意这里生成服务配置文件时,如果目标文件内容有所改变,这里将会触发"重启服务"的操作,具体有handler处理:
+handlers/main.yml</p>
+<div class="highlight"><pre><span></span><span class="x">---</span>
+<span class="x">- name: restart mysql</span>
+<span class="x">  service: &quot;name=</span><span class="cp">{{</span> <span class="nv">mysql_daemon</span> <span class="cp">}}</span><span class="x"> state=restarted&quot;</span>
+<span class="x">  when: mysql_restart_daemon</span>
+</pre></div>
+
+
+<p>并且配置文件的内容来自role的默认配置defaults/main.yml.</p>
+<p>假设有下面这样一个playbook:</p>
+<div class="highlight"><pre><span></span>---
+
+- name: install mysql on all nodes
+  hosts:
+    - all
+  remote_user: root
+  gather_facts: True
+  roles:
+    - { role: mysql_install}
+</pre></div>
+
+
+<p>执行</p>
+<div class="highlight"><pre><span></span>ansible-playbook -i hosts.ivt site.yml 
+</pre></div>
+
+
+<p>如果没有异常的出现,所有目标主机将达到一致的状态.</p>
+<h1>自定义的执行模块</h1>
+<p>前文说到ansible是全面支持插件系统的,如模块、callback、connections、loopup等等.ANSIBLE自带的模块虽然已经非常强大,但有时仍不能覆盖某些场景,比如我就想实现在数据库的查询,这里我实现了一个简单的执行Module,由于并未全面对mysql的各种语句作过测试,所以使用场景目前还是有限.
+先看下文档:</p>
+<div class="highlight"><pre><span></span>&gt; MYSQL_EXECUTE
+
+  execute a SQL query in MySQL  database.
+
+Options (= is mandatory):
+
+- auto_get_master
+        `yes&#39; will detect the master node and execute execute query on master,if execute_on_master is &quot;yes&quot; in replication situation. `no&#39;
+        will exit with an error:this host is not master node. (Choices: yes, false) [Default: False]
+
+- config_file
+        Specify a config file from which user and password are to be read [Default: ~/.my.cnf]
+
+- connect_timeout
+        The connection timeout when connecting to the MySQL server. [Default: 30]
+
+- dict_reault
+        whether the result data should be dict type in json format [Default: False]
+
+- execute_on_master
+        `yes&#39; will execute the query on the master node if in replication situation. (Choices: yes, false) [Default: False]
+
+- filter_columns
+        filter the specified column(s)(,seperated) to the result data [Default: all]
+
+- login_host
+        Host running the database [Default: localhost]
+
+- login_password
+        The password used to authenticate with [Default: None]
+
+- login_port
+        Port of the MySQL server. Requires login_host be defined as other then localhost if login_port is used [Default: 3306]
+
+- login_unix_socket
+        The path to a Unix domain socket for local connections [Default: None]
+
+- login_user
+        The username used to authenticate with [Default: None]
+
+= query
+        a SQL query in MySQL  database
+
+- ssl_ca
+        The path to a Certificate Authority (CA) certificate. This option, if used, must specify the same certificate as used by the
+        server. [Default: None]
+
+- ssl_cert
+        The path to a client public key certificate. [Default: None]
+
+- ssl_key
+        The path to the client private key. [Default: None]
+
+Notes:  Execute a query on mysql server.For some dml,generally must be executed on the master node. Requires the MySQLdb Python package on
+        the remote host. For Ubuntu, this is as easy as apt-get install python-mysqldb. (See [apt].) For CentOS/Fedora, this is as
+        easy as yum install MySQL-python. (See [yum].) Both `login_password&#39; and `login_user&#39; are required when you are passing
+        credentials. If none are present, the module will attempt to read the credentials from `~/.my.cnf&#39;, and finally fall back to
+        using the MySQL default login of &#39;root&#39; with no password.
+
+Requirements:  MySQLdb
+</pre></div>
+
+
+<p>类似基本mysql_user模块,这里我设定了两个有用的参数
+<em> auto_get_master: 自动找到复制集群的主库
+</em> execute_on_master :需要在主库上才能招行,防止破坏集群的正常复制.
+使用范例:</p>
+<div class="highlight"><pre><span></span><span class="x">    mysql_execute:</span>
+<span class="x">        login_port: 3358</span>
+<span class="x">        login_password: pass</span>
+<span class="x">        login_user: monitor</span>
+<span class="x">        login_host: &quot;</span><span class="cp">{{</span> <span class="nv">inventory_hostname</span> <span class="cp">}}</span><span class="x">&quot;</span>
+<span class="x">        query: &quot;show master status&quot;</span>
+<span class="x">        execute_on_master: yes</span>
+<span class="x">        auto_get_master: yes</span>
+</pre></div>
+
+
+<p>如果有兴趣研究源码请到这里</p>
+<h1>总结</h1>
+<p>关于执行效率,据我的经验,如修改用户授权开30个并发对10000+实例的进行操作,基本能在20分钟内完成,操作效率相对还是很高的,如果对较小规模的集群可以做到"分分钟"搞定.</p>
+<p>Ansible带来了一种简洁、高效、灵活的方式来完成如果使用传统方式通常比较复杂(也意味着更多的出错机会)的工作，很多场景确实有事半功倍效果。
+通过这些经验案例,希望能抛砖引玉,大家再举一反三。</p>
+                </article>
+                </aside><!-- /#featured -->
+            <section id="content" class="body">
+                <h1>Other articles</h1>
+                <hr />
+                    <ol id="posts-list" class="hfeed">
+        
+ 
+        <li><article class="hentry">    
+                <header>
+                        <h1><a href="/ansible-kuai-su-shang-shou-role.html" rel="bookmark" title="Permalink to ansible 快速上手--role">ansible 快速上手--role</a></h1>
+                </header>
+                
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-04-20T18:20:00+08:00">
                 一 20 四月 2015
@@ -74,100 +512,10 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
 
 <ul>
 <li>defaults:简单说就是可以配置默认值的位置.</li>
-<li>files: 可以将你在项目中使用的任何文件,比如自定的脚本(远程)/安装包等等,放在这里,注意在使用这个文件时,你不需要指明路径,ansible自动处理</li>
-<li>handlers: 意义和playbook中的意义相同</li>
-<li>meta: 可定义作者/版本/依赖等信息</li>
-<li>vars: 定义变量.这里有个小问题,defaults中同样可以定义变量,那么变量的优先级是怎样的?如果task中也存在相同变量呢?playbook命令行中又传入一个相同的呢?
-        很简单 优先级 命令行(-e) &gt; task vars &gt; role vars &gt; role defaults</li>
-</ul>
-<p>直接来一个demo:
-meta:</p>
-<div class="highlight"><pre><span></span>---
-<span class="n">galaxy_info:</span>
-  <span class="n">author:</span> <span class="n">your</span> <span class="nb">name</span>
-  <span class="n">description:</span> 
-  <span class="n">company:</span> <span class="n">your</span> <span class="n">company</span> (<span class="n">optional</span>)
-  <span class="c c-Singleline"># Some suggested licenses:</span>
-  <span class="c c-Singleline"># - BSD (default)</span>
-  <span class="c c-Singleline"># - MIT</span>
-  <span class="c c-Singleline"># - GPLv2</span>
-  <span class="c c-Singleline"># - GPLv3</span>
-  <span class="c c-Singleline"># - Apache</span>
-  <span class="c c-Singleline"># - CC-BY</span>
-  <span class="n">license:</span> <span class="n">license</span> (<span class="n">GPLv2</span>, <span class="n">CC-BY</span>, <span class="n">etc</span>)
-  <span class="n">min_ansible_version:</span> <span class="mf">1.2</span>
-</pre></div>
-
-
-<p>defaults:</p>
-<div class="highlight"><pre><span></span>---
-# defaults file for kernel
-kernel_paramiters:
-    kernel.panic:
-      value: &quot;5&quot;
-      # ignoreerrors: yes
-    kernel.sem:
-      value: &quot;5010 641280 5010 128&quot;
-
-    kernel.shmmax:
-      value: &quot;68719476736&quot;
-    kernel.shmall:
-      value: &quot;4294967296&quot;
-    kernel.core_uses_pid:
-      value: 1
-    kernel.sysrq:
-      value: 0
-    kernel.pid_max:
-      value: 4129024
-    kernel.threads-max:
-      value: 1029751
-    kernel.shmmni:
-
-...
-</pre></div>
-
-
-<p>tasks:</p>
-<div class="highlight"><pre><span></span><span class="x">---</span>
-<span class="x"># tasks file for kernel</span>
-<span class="x">- name: KERNEL | modify file_limits</span>
-<span class="x">  command: echo &#39;*  -  nofile  10240&#39; &gt;&gt; /etc/security/limits.conf;echo &quot;ulimit -n 10240&quot; &gt;&gt;/etc/profile</span>
-<span class="x">  tags: KERNEL</span>
-
-<span class="x">- name: KERNEL | modify kernel paramiters</span>
-<span class="x">  sysctl: name=&quot;</span><span class="cp">{{</span> <span class="nv">item.key</span> <span class="cp">}}</span><span class="x">&quot; value=&quot;</span><span class="cp">{{</span> <span class="nv">item.value.value</span> <span class="cp">}}</span><span class="x">&quot; state=present reload=yes ignoreerrors=yes</span>
-<span class="x">  with_dict: kernel_paramiters</span>
-
-<span class="x">  tags: KERNEL</span>
-</pre></div>
-
-
-<p>比如你有一个site.yml:</p>
-<div class="highlight"><pre><span></span>---
-
-- name: apply common configuration to all nodes
-  hosts:
-    - all
-  remote_user: root
-  gather_facts: True
-
-
-  roles:
-    #- { role: kernel }
-    #- role: kernel
-    - kernel
-</pre></div>
-
-
-<p>上边的三种形式都是可以的,使用下面的命令,即可完成kernel参数的调整.</p>
-<div class="highlight"><pre><span></span>ansible-playbook -i xx.ivt site.yml
-</pre></div>
-                </article>
-                </aside><!-- /#featured -->
-            <section id="content" class="body">
-                <h1>Other articles</h1>
-                <hr />
-                    <ol id="posts-list" class="hfeed">
+<li>files: 可以将你在项目中使用的任何文件,比如自定的脚本 …</li></ul>
+                <a class="readmore" href="/ansible-kuai-su-shang-shou-role.html">read more</a>
+                </div><!-- /.entry-content -->
+        </article></li>
         
  
         <li><article class="hentry">    
@@ -314,7 +662,7 @@ kernel_paramiters:
 
 
 <p>执行结果:
-<img alt="" src="/Users/TIGER/Desktop/WechatIMG37.jpeg" title="Optional title"></p>
+<img alt="" src="linear.png" title="linear"></p>
 <ul>
 <li>free :即每个主机的执行过程是连续的,不存在等待的情况</li>
 </ul>
@@ -329,7 +677,8 @@ kernel_paramiters:
 </pre></div>
 
 
-<p>执行结果:</p>
+<p>执行结果:
+<img alt="" src="free.png" title="linear"></p>
 <ul>
 <li>debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后，继续执行，如：</li>
 </ul>
