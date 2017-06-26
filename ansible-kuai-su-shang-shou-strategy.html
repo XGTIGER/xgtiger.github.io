@@ -42,9 +42,11 @@
         </address>
 <p>In <a href="/category/ansible.html">Ansible</a>. </p>
 </p>
-</footer><!-- /.post-info -->        <p>strategy 表明如何每个task在hosts中执行的相对顺序
-默认主要有三种执行策略:
-* linear 线性:每个task的执行在全部主机执行完成时再执行下一个</p>
+</footer><!-- /.post-info -->        <p>strategy 表明每个task在hosts中执行的相对顺序
+主要有三种执行策略:</p>
+<ul>
+<li>linear 线性:每个task的执行在全部主机执行完成时再执行下一个</li>
+</ul>
 <div class="highlight"><pre><span></span><span class="x">- hosts: &quot;</span><span class="cp">{{</span><span class="nv">hosts</span><span class="cp">}}</span><span class="x">&quot;</span>
 <span class="x">  gather_facts: yes</span>
 <span class="x">  strategy: linear</span>
