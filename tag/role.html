@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>Categories - XGTIGER's Notes</title>
+    <title>role - XGTIGER's Notes</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,7 +10,8 @@
 
 
 
-        <meta name="author" content="wyk" />
+    <meta name="author" content="wyk" />
+    <meta name="keywords" content="role" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="XGTIGER's Notes" />
@@ -69,34 +70,42 @@ XGTIGER's Notes            </a>
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-    <section id="categories">
-      <h1>All Categories for XGTIGER's Notes</h1>
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-ansible">Ansible <span class="badge pull-right">11</span></a>
-                    </h4>
+            <article>
+                <h2><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></h2>
+                <div class="summary"><html><body><p>让ansible 工作的真正的姿势,还是使用<a href="http://docs.ansible.com/ansible/playbooks_roles.html">role</a>
+简单来说,role的组织类似pypi,是ansible的功能包.
+ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布的role :</p>
+<div class="highlight"><pre><span></span>ansible-galaxy install username.rolename
+</pre></div>
+<p>或开始创建一个新的role:</p>
+<div class="highlight"><pre><span></span>ansible-galaxy init testrole
+</pre></div>
+<p>这样名称为<em>testrole</em>的role就初始化好了,看看它的结构:</p>
+<div class="highlight"><pre><span></span>├── defaults
+│   └── main.yml
+├── files
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── README.md
+├── tasks
+│   └── main.yml
+├── templates
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+    └── main.yml
+</pre></div>
+<ul>
+<li>defaults:简单说就是可以配置默认值的位置.</li>
+<li>files: 可以将你在项目中使用的任何文件,比如自定的脚本 …</li></ul></body></html>
+                    <a class="btn btn-default btn-xs" href="/ansible-kuai-su-shang-shou-role.html">more ...</a>
                 </div>
-                <div id="collapse-ansible" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p><span class="categories-timestamp"><time datetime="2017-06-24T19:10:00+08:00">六 24 六月 2017</time></span> <a href="/ru-he-zai-da-gui-mo-shu-ju-ku-guan-li-zhong-shi-yong-ansible.html">如何在大规模数据库管理中使用ANSIBLE</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2015-04-20T18:20:00+08:00">一 20 四月 2015</time></span> <a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2015-04-13T13:50:00+08:00">一 13 四月 2015</time></span> <a href="/ansible-kuai-su-shang-shou-loops.html">ansible 快速上手--loops</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2015-04-03T15:59:00+08:00">五 03 四月 2015</time></span> <a href="/ansible-kuai-su-shang-shou-prompts.html">ansible 快速上手--Prompts</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2015-03-18T09:49:00+08:00">三 18 三月 2015</time></span> <a href="/ansible-kuai-su-shang-shou-strategy.html">ansible 快速上手--strategy</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2015-03-07T22:34:00+08:00">六 07 三月 2015</time></span> <a href="/ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2015-02-10T19:40:00+08:00">二 10 二月 2015</time></span> <a href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html">ansible快速上手--开始使用playbook</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-11-29T11:20:00+08:00">六 29 十一月 2014</time></span> <a href="/ansible-kuai-su-shang-shou-dynamic-inventory.html">ansible 快速上手--dynamic inventory</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-11-28T19:10:00+08:00">五 28 十一月 2014</time></span> <a href="/ansible-kuai-su-shang-shou.html">ansible 快速上手</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-11-28T14:20:00+08:00">五 28 十一月 2014</time></span> <a href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html">ansible 快速上手--yaml语法简介</a></p>
-                        <p><span class="categories-timestamp"><time datetime="2014-11-28T10:20:00+08:00">五 28 十一月 2014</time></span> <a href="/ansible-ji-ben-shi-yong.html">ansible 基本使用</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </article>
+            <hr/>
 
-    </section>
         </div>
         <div class="col-sm-3" id="sidebar">
             <aside>
@@ -127,7 +136,7 @@ XGTIGER's Notes            </a>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2017 wyk
+         <div class="col-xs-10">&copy; 2015 wyk
             &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
