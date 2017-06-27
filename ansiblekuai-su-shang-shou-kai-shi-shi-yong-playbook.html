@@ -12,6 +12,7 @@
 <link rel="canonical" href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html">
 
         <meta name="author" content="wyk" />
+        <meta name="keywords" content="ansible,ansible快速上手" />
         <meta name="description" content="使用第一个playbook，最简单的形式 #modify_apache_config.yml --- - hosts: webservers vars: http_port: 80 max_clients: 200 remote_user: root tasks: - name: ensure apache is at the latest version yum: name=httpd state=latest - name: write the apache config file template: src=/srv/httpd.j2 dest=/etc/httpd.conf notify: - restart apache - name: ensure apache is running …" />
 
         <meta property="og:site_name" content="XGTIGER's Notes" />
@@ -21,6 +22,8 @@
         <meta property="og:description" content="使用第一个playbook，最简单的形式 #modify_apache_config.yml --- - hosts: webservers vars: http_port: 80 max_clients: 200 remote_user: root tasks: - name: ensure apache is at the latest version yum: name=httpd state=latest - name: write the apache config file template: src=/srv/httpd.j2 dest=/etc/httpd.conf notify: - restart apache - name: ensure apache is running …"/>
         <meta property="article:published_time" content="2015-02-10" />
             <meta property="article:section" content="Ansible" />
+            <meta property="article:tag" content="ansible" />
+            <meta property="article:tag" content="ansible快速上手" />
             <meta property="article:author" content="wyk" />
 
 
@@ -97,6 +100,10 @@ XGTIGER's Notes            </a>
 
 
 
+<span class="label label-default">Tags</span>
+	<a href="/tag/ansible.html">ansible</a>
+        /
+	<a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
@@ -187,6 +194,16 @@ XGTIGER's Notes            </a>
 <p>playbook的初体验就暂且先到这里。</p></body></html>
             </div>
             <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="/ansible-kuai-su-shang-shou-prompts.html">ansible 快速上手--Prompts</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></li>
+        <li><a href="/ansible-ji-ben-shi-yong.html">ansible 基本使用</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-dynamic-inventory.html">ansible 快速上手--dynamic inventory</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-strategy.html">ansible 快速上手--strategy</a></li>
+    </ul>
+</section>
         </article>
     </section>
 
@@ -201,11 +218,14 @@ XGTIGER's Notes            </a>
 <li class="list-group-item">
   <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
   <ul class="list-group " id="tags">
-    <li class="list-group-item tag-4">
-      <a href="/tag/role.html">role</a>
-    </li>
-    <li class="list-group-item tag-4">
+    <li class="list-group-item tag-1">
       <a href="/tag/ansible.html">ansible</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
+    </li>
+    <li class="list-group-item tag-10">
+      <a href="/tag/mysql.html">mysql</a>
     </li>
   </ul>
 </li>

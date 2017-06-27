@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>role - XGTIGER's Notes</title>
+    <title>ansible - XGTIGER's Notes</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -11,7 +11,7 @@
 
 
     <meta name="author" content="wyk" />
-    <meta name="keywords" content="role" />
+    <meta name="keywords" content="ansible" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="XGTIGER's Notes" />
@@ -71,41 +71,47 @@ XGTIGER's Notes            </a>
     <div class="row">
         <div class="col-sm-9">
             <article>
-                <h2><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></h2>
-                <div class="summary"><html><body><p>让ansible 工作的真正的姿势,还是使用<a href="http://docs.ansible.com/ansible/playbooks_roles.html">role</a>
-简单来说,role的组织类似pypi,是ansible的功能包.
-ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布的role :</p>
-<div class="highlight"><pre><span></span>ansible-galaxy install username.rolename
-</pre></div>
-<p>或开始创建一个新的role:</p>
-<div class="highlight"><pre><span></span>ansible-galaxy init testrole
-</pre></div>
-<p>这样名称为<em>testrole</em>的role就初始化好了,看看它的结构:</p>
-<div class="highlight"><pre><span></span>├── defaults
-│   └── main.yml
-├── files
-├── handlers
-│   └── main.yml
-├── meta
-│   └── main.yml
-├── README.md
-├── tasks
-│   └── main.yml
-├── templates
-├── tests
-│   ├── inventory
-│   └── test.yml
-└── vars
-    └── main.yml
+                <h2><a href="/ansible-ji-ben-shi-yong.html">ansible 基本使用</a></h2>
+                <div class="summary"><html><body><h3 id="jian-jie">简介</h3>
+<p>ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点：</p>
+<ul>
+<li><strong>agentless</strong>模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。</li>
+<li>幂等性：不会重复执行相同的指令。例如不会重复安装软件</li>
+<li>期望状态：只需要告诉被监控端的期望状态。</li>
+</ul>
+<h3 id="an-zhuang">安装</h3>
+<p><code>pip install ansible</code></p>
+<h3 id="ding-yi-host-inventoryzhu-ji-qing-dan">定义Host Inventory（主机清单）</h3>
+<p>vim /etc/ansible/hosts，有以下几种可用形式:</p>
+<ul>
+<li>带附属属性 </li>
+</ul>
+<div class="highlight"><pre><span></span>[testgroup] 
+10.10.2.6     ansible_ssh_user=root 
+10.10.0.11     ansible_ssh_user=root 
+[others]
+other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
 </pre></div>
 <ul>
-<li>defaults:简单说就是可以配置默认值的位置.</li>
-<li>files: 可以将你在项目中使用的任何文件,比如自定的脚本 …</li></ul></body></html>
-                    <a class="btn btn-default btn-xs" href="/ansible-kuai-su-shang-shou-role.html">more ...</a>
+<li>使用pattern</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">[webservers …</span></pre></div></body></html>
+                    <a class="btn btn-default btn-xs" href="/ansible-ji-ben-shi-yong.html">more ...</a>
                 </div>
             </article>
             <hr/>
 
+        <ul class="pagination">
+                <li class="prev"><a href="/tag/ansible2.html">&laquo;</a>
+                </li>
+                    <li class=""><a
+                            href="/tag/ansible.html">1</a></li>
+                    <li class=""><a
+                            href="/tag/ansible2.html">2</a></li>
+                    <li class="active"><a
+                            href="/tag/ansible3.html">3</a></li>
+                <li class="next disabled"><a href="#">&raquo;</a></li>
+        </ul>
         </div>
         <div class="col-sm-3" id="sidebar">
             <aside>
@@ -117,11 +123,14 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
 <li class="list-group-item">
   <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
   <ul class="list-group " id="tags">
-    <li class="list-group-item tag-4">
-      <a href="/tag/role.html">role</a>
-    </li>
-    <li class="list-group-item tag-4">
+    <li class="list-group-item tag-1">
       <a href="/tag/ansible.html">ansible</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
+    </li>
+    <li class="list-group-item tag-10">
+      <a href="/tag/mysql.html">mysql</a>
     </li>
   </ul>
 </li>
@@ -136,7 +145,7 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2015 wyk
+         <div class="col-xs-10">&copy; 2017 wyk
             &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>

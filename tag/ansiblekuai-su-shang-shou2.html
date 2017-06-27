@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>Articles by wyk - XGTIGER's Notes</title>
+    <title>ansible快速上手 - XGTIGER's Notes</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,7 +10,8 @@
 
 
 
-        <meta name="author" content="wyk" />
+    <meta name="author" content="wyk" />
+    <meta name="keywords" content="ansible快速上手" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="XGTIGER's Notes" />
@@ -69,32 +70,6 @@ XGTIGER's Notes            </a>
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-            <article>
-                <h2><a href="/ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></h2>
-                <div class="summary"><html><body><p>条件关键字,极大地加强了逻辑严谨性，并且提升了功能的健壮性</p>
-<ul>
-<li>when: 只有条件为真时该task才会执行</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="x">tasks:</span>
-<span class="x">    - shell: echo "I've got '</span><span class="cp">{{</span> <span class="nv">foo</span> <span class="cp">}}</span><span class="x">' and am not afraid to use it!"</span>
-<span class="x">      when: foo is defined</span>
-
-<span class="x">    - fail: msg="Bailing out. this play requires 'bar'"</span>
-<span class="x">      when: bar is undefined</span>
-</pre></div>
-<ul>
-<li>or 用在roles和include</li>
-</ul>
-<div class="highlight"><pre><span></span>- hosts: webservers
-  roles:
-     - { role: debian_stock_config, when: ansible_os_family == 'Debian' }
-</pre></div>
-<div class="highlight"><pre><span></span>- include: tasks/sometasks.yml
-  when: "'reticulating …</pre></div></body></html>
-                    <a class="btn btn-default btn-xs" href="/ansible-kuai-su-shang-shou-conditionals.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
             <article>
                 <h2><a href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html">ansible快速上手--开始使用playbook</a></h2>
                 <div class="summary"><html><body><h2 id="shi-yong-di-yi-ge-playbookzui-jian-dan-de-xing-shi">使用第一个playbook，最简单的形式</h2>
@@ -212,18 +187,45 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
                 </div>
             </article>
             <hr/>
+            <article>
+                <h2><a href="/ansible-ji-ben-shi-yong.html">ansible 基本使用</a></h2>
+                <div class="summary"><html><body><h3 id="jian-jie">简介</h3>
+<p>ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点：</p>
+<ul>
+<li><strong>agentless</strong>模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。</li>
+<li>幂等性：不会重复执行相同的指令。例如不会重复安装软件</li>
+<li>期望状态：只需要告诉被监控端的期望状态。</li>
+</ul>
+<h3 id="an-zhuang">安装</h3>
+<p><code>pip install ansible</code></p>
+<h3 id="ding-yi-host-inventoryzhu-ji-qing-dan">定义Host Inventory（主机清单）</h3>
+<p>vim /etc/ansible/hosts，有以下几种可用形式:</p>
+<ul>
+<li>带附属属性 </li>
+</ul>
+<div class="highlight"><pre><span></span>[testgroup] 
+10.10.2.6     ansible_ssh_user=root 
+10.10.0.11     ansible_ssh_user=root 
+[others]
+other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
+</pre></div>
+<ul>
+<li>使用pattern</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">[webservers …</span></pre></div></body></html>
+                    <a class="btn btn-default btn-xs" href="/ansible-ji-ben-shi-yong.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
         <ul class="pagination">
-                <li class="prev"><a href="/author/wyk.html">&laquo;</a>
+                <li class="prev"><a href="/tag/ansiblekuai-su-shang-shou.html">&laquo;</a>
                 </li>
                     <li class=""><a
-                            href="/author/wyk.html">1</a></li>
+                            href="/tag/ansiblekuai-su-shang-shou.html">1</a></li>
                     <li class="active"><a
-                            href="/author/wyk2.html">2</a></li>
-                    <li class=""><a
-                            href="/author/wyk3.html">3</a></li>
-                <li class="next"><a
-                        href="/author/wyk3.html">&raquo;</a></li>
+                            href="/tag/ansiblekuai-su-shang-shou2.html">2</a></li>
+                <li class="next disabled"><a href="#">&raquo;</a></li>
         </ul>
         </div>
         <div class="col-sm-3" id="sidebar">
@@ -258,7 +260,7 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2017 wyk
+         <div class="col-xs-10">&copy; 2015 wyk
             &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>

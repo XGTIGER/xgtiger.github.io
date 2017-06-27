@@ -71,6 +71,28 @@ XGTIGER's Notes            </a>
     <div class="row">
         <div class="col-sm-9">
             <article>
+                <h2><a href="/ru-he-zai-da-gui-mo-shu-ju-ku-guan-li-zhong-shi-yong-ansible.html">如何在大规模数据库管理中使用ANSIBLE</a></h2>
+                <div class="summary"><html><body><h1 id="jie-shao">介绍</h1>
+<p><a href="http://docs.ansible.com/ansible/">Ansible</a> ,现在不只是一个配置管理和应用部署工具，2.2版本更是增加了对<a href="https://zh.wikipedia.org/wiki/%E7%BC%96%E9%85%8D_(%E8%AE%A1%E7%AE%97%E6%9C%BA)">编排</a>的支持,2.0版本经过了代码的完全重构，全面支持可扩展的插件系统，便于使用者通过实现各种功能插件来满足自己的需求。Ansible 的作者Michael DeHaan 同时也是知名软件 Cobbler 与 Func 的作者。</p>
+<p>Ansible的模块设计,遵循<a href="https://zh.wikipedia.org/wiki/%E5%86%AA%E7%AD%89">幂等性</a>的原则,在使用playbook的过程中，你将更清晰的体会到这一特点。</p>
+<p>Ansible 的常被用于如下（但不限于）几个场景：</p>
+<ul>
+<li>
+<p>自动化部署应用</p>
+</li>
+<li>
+<p>自动化配置管理</p>
+</li>
+<li>
+<p>自动化的持续交付</p>
+</li>
+</ul>
+<p>同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless，即 Ansible 没有类似saltstack的agent部署需求，相对灵活简便;缺点也存在，比如执行响应的开销相对大.其实没那么明显，与您常用的ssh指令相当 …</p></body></html>
+                    <a class="btn btn-default btn-xs" href="/ru-he-zai-da-gui-mo-shu-ju-ku-guan-li-zhong-shi-yong-ansible.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></h2>
                 <div class="summary"><html><body><p>让ansible 工作的真正的姿势,还是使用<a href="http://docs.ansible.com/ansible/playbooks_roles.html">role</a>
 简单来说,role的组织类似pypi,是ansible的功能包.
@@ -105,7 +127,137 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
                 </div>
             </article>
             <hr/>
+            <article>
+                <h2><a href="/ansible-kuai-su-shang-shou-loops.html">ansible 快速上手--loops</a></h2>
+                <div class="summary"><html><body><p>Ansible提供了多种遍历操作功能,包括对特定文件等操作</p>
+<ul>
+<li>with_items标准循环</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">- name: add several users</span>
+<span class="x">  user: name=</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="x"> state=present groups=wheel</span>
+<span class="x">  with_items:</span>
+<span class="x">     - testuser1</span>
+<span class="x">     - testuser2</span>
+</pre></div>
+<ul>
+<li>笛卡尔积</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">- hosts: all</span>
+<span class="x">  vars:</span>
+<span class="x">    - list1: [1,2,3]</span>
+<span class="x">    - list2: [4,5,6]</span>
+<span class="x">    - list3: [7,8,9]</span>
+<span class="x">  tasks:</span>
+<span class="x">    - debug: msg="</span><span class="cp">{{</span><span class="nv">item</span><span class="cp">}}</span><span class="x">"</span>
+<span class="x">      with_cartesian:</span>
+<span class="x">        - list1</span>
+<span class="x">        - list2</span>
+<span class="x">        - list3</span>
+</pre></div>
+<ul>
+<li>with_file</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">---</span>
+<span class="x">- hosts: all</span>
 
+<span class="x">  tasks:</span>
+
+<span class="x">    # emit a debug message containing …</span></pre></div></body></html>
+                    <a class="btn btn-default btn-xs" href="/ansible-kuai-su-shang-shou-loops.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="/ansible-kuai-su-shang-shou-prompts.html">ansible 快速上手--Prompts</a></h2>
+                <div class="summary"><html><body><p>prompt关键字能够实现交互式动态提供变量给playbook</p>
+<ul>
+<li>常规用法 </li>
+</ul>
+<div class="highlight"><pre><span></span>---
+- hosts: all
+  remote_user: root
+
+  vars:
+    from: "camelot"
+
+  vars_prompt:
+    - name: "name"
+      prompt: "what is your name?"
+    - name: "quest"
+      prompt: "what is your quest?"
+    - name: "favcolor"
+      prompt: "what is your favorite color?"
+</pre></div>
+<ul>
+<li>使用 default:</li>
+</ul>
+<div class="highlight"><pre><span></span>vars_prompt:
+
+  - name: "release_version"
+    prompt: "Product release version"
+    default: "1.0"
+</pre></div>
+<ul>
+<li>use private</li>
+</ul>
+<div class="highlight"><pre><span></span>vars_prompt:
+
+  - name: "some_password"
+    prompt …</pre></div></body></html>
+                    <a class="btn btn-default btn-xs" href="/ansible-kuai-su-shang-shou-prompts.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="/ansible-kuai-su-shang-shou-strategy.html">ansible 快速上手--strategy</a></h2>
+                <div class="summary"><html><body><p>strategy 表明每个task在hosts中执行的相对顺序
+主要有三种执行策略:</p>
+<ul>
+<li>linear 线性:每个task的执行在全部主机执行完成时再执行下一个</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">- hosts: "</span><span class="cp">{{</span><span class="nv">hosts</span><span class="cp">}}</span><span class="x">"</span>
+<span class="x">  gather_facts: yes</span>
+<span class="x">  strategy: linear</span>
+<span class="x">  tasks:</span>
+<span class="x">    - name: debug</span>
+<span class="x">      debug: var=ansible_kernel</span>
+</pre></div>
+<p>执行结果:
+<img alt="" class="img-responsive" src="../images/linear.png" title="linear"/></p>
+<ul>
+<li>free :即每个主机的执行过程是连续的,不存在等待的情况</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">- hosts: "</span><span class="cp">{{</span><span class="nv">hosts</span><span class="cp">}}</span><span class="x">"</span>
+<span class="x">  gather_facts: yes</span>
+<span class="x">  strategy: free</span>
+<span class="x">  tasks:</span>
+<span class="x">    - name: sleep</span>
+<span class="x">      shell: sleep "</span><span class="cp">{{</span><span class="m">10</span><span class="o">|</span><span class="nf">random</span><span class="cp">}}</span><span class="x">";</span>
+<span class="x">    - name: debug</span>
+<span class="x">      debug: var=ansible_kernel</span>
+</pre></div>
+<p>执行结果:
+<img alt="" class="img-responsive" src="../images/free.png" title="linear"/></p>
+<ul>
+<li>debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后，继续执行，如：</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">- hosts: test …</span></pre></div></body></html>
+                    <a class="btn btn-default btn-xs" href="/ansible-kuai-su-shang-shou-strategy.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
+        <ul class="pagination">
+                <li class="prev disabled"><a href="#">&laquo;</a></li>
+                    <li class="active"><a
+                            href="/tag/ansible.html">1</a></li>
+                    <li class=""><a
+                            href="/tag/ansible2.html">2</a></li>
+                    <li class=""><a
+                            href="/tag/ansible3.html">3</a></li>
+                <li class="next"><a
+                        href="/tag/ansible2.html">&raquo;</a></li>
+        </ul>
         </div>
         <div class="col-sm-3" id="sidebar">
             <aside>
@@ -117,11 +269,14 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
 <li class="list-group-item">
   <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
   <ul class="list-group " id="tags">
-    <li class="list-group-item tag-4">
-      <a href="/tag/role.html">role</a>
-    </li>
-    <li class="list-group-item tag-4">
+    <li class="list-group-item tag-1">
       <a href="/tag/ansible.html">ansible</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
+    </li>
+    <li class="list-group-item tag-10">
+      <a href="/tag/mysql.html">mysql</a>
     </li>
   </ul>
 </li>
@@ -136,7 +291,7 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2015 wyk
+         <div class="col-xs-10">&copy; 2017 wyk
             &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>Articles by wyk - XGTIGER's Notes</title>
+    <title>ansible快速上手 - XGTIGER's Notes</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,7 +10,8 @@
 
 
 
-        <meta name="author" content="wyk" />
+    <meta name="author" content="wyk" />
+    <meta name="keywords" content="ansible快速上手" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="XGTIGER's Notes" />
@@ -69,28 +70,6 @@ XGTIGER's Notes            </a>
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-            <article>
-                <h2><a href="/ru-he-zai-da-gui-mo-shu-ju-ku-guan-li-zhong-shi-yong-ansible.html">如何在大规模数据库管理中使用ANSIBLE</a></h2>
-                <div class="summary"><html><body><h1 id="jie-shao">介绍</h1>
-<p><a href="http://docs.ansible.com/ansible/">Ansible</a> ,现在不只是一个配置管理和应用部署工具，2.2版本更是增加了对<a href="https://zh.wikipedia.org/wiki/%E7%BC%96%E9%85%8D_(%E8%AE%A1%E7%AE%97%E6%9C%BA)">编排</a>的支持,2.0版本经过了代码的完全重构，全面支持可扩展的插件系统，便于使用者通过实现各种功能插件来满足自己的需求。Ansible 的作者Michael DeHaan 同时也是知名软件 Cobbler 与 Func 的作者。</p>
-<p>Ansible的模块设计,遵循<a href="https://zh.wikipedia.org/wiki/%E5%86%AA%E7%AD%89">幂等性</a>的原则,在使用playbook的过程中，你将更清晰的体会到这一特点。</p>
-<p>Ansible 的常被用于如下（但不限于）几个场景：</p>
-<ul>
-<li>
-<p>自动化部署应用</p>
-</li>
-<li>
-<p>自动化配置管理</p>
-</li>
-<li>
-<p>自动化的持续交付</p>
-</li>
-</ul>
-<p>同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless，即 Ansible 没有类似saltstack的agent部署需求，相对灵活简便;缺点也存在，比如执行响应的开销相对大.其实没那么明显，与您常用的ssh指令相当 …</p></body></html>
-                    <a class="btn btn-default btn-xs" href="/ru-he-zai-da-gui-mo-shu-ju-ku-guan-li-zhong-shi-yong-ansible.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
             <article>
                 <h2><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></h2>
                 <div class="summary"><html><body><p>让ansible 工作的真正的姿势,还是使用<a href="http://docs.ansible.com/ansible/playbooks_roles.html">role</a>
@@ -245,17 +224,41 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
                 </div>
             </article>
             <hr/>
+            <article>
+                <h2><a href="/ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></h2>
+                <div class="summary"><html><body><p>条件关键字,极大地加强了逻辑严谨性，并且提升了功能的健壮性</p>
+<ul>
+<li>when: 只有条件为真时该task才会执行</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">tasks:</span>
+<span class="x">    - shell: echo "I've got '</span><span class="cp">{{</span> <span class="nv">foo</span> <span class="cp">}}</span><span class="x">' and am not afraid to use it!"</span>
+<span class="x">      when: foo is defined</span>
+
+<span class="x">    - fail: msg="Bailing out. this play requires 'bar'"</span>
+<span class="x">      when: bar is undefined</span>
+</pre></div>
+<ul>
+<li>or 用在roles和include</li>
+</ul>
+<div class="highlight"><pre><span></span>- hosts: webservers
+  roles:
+     - { role: debian_stock_config, when: ansible_os_family == 'Debian' }
+</pre></div>
+<div class="highlight"><pre><span></span>- include: tasks/sometasks.yml
+  when: "'reticulating …</pre></div></body></html>
+                    <a class="btn btn-default btn-xs" href="/ansible-kuai-su-shang-shou-conditionals.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
         <ul class="pagination">
                 <li class="prev disabled"><a href="#">&laquo;</a></li>
                     <li class="active"><a
-                            href="/author/wyk.html">1</a></li>
+                            href="/tag/ansiblekuai-su-shang-shou.html">1</a></li>
                     <li class=""><a
-                            href="/author/wyk2.html">2</a></li>
-                    <li class=""><a
-                            href="/author/wyk3.html">3</a></li>
+                            href="/tag/ansiblekuai-su-shang-shou2.html">2</a></li>
                 <li class="next"><a
-                        href="/author/wyk2.html">&raquo;</a></li>
+                        href="/tag/ansiblekuai-su-shang-shou2.html">&raquo;</a></li>
         </ul>
         </div>
         <div class="col-sm-3" id="sidebar">
@@ -290,7 +293,7 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2017 wyk
+         <div class="col-xs-10">&copy; 2015 wyk
             &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
