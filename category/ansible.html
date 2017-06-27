@@ -216,11 +216,11 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
 <li>linear 线性:每个task的执行在全部主机执行完成时再执行下一个</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="x">- hosts: "</span><span class="cp">{{</span><span class="nv">hosts</span><span class="cp">}}</span><span class="x">"</span>
-<span class="x">  gather\_facts: yes</span>
+<span class="x">  gather_facts: yes</span>
 <span class="x">  strategy: linear</span>
 <span class="x">  tasks:</span>
 <span class="x">    - name: debug</span>
-<span class="x">      debug: var=ansible\_kernel</span>
+<span class="x">      debug: var=ansible_kernel</span>
 </pre></div>
 <p>执行结果:
 <img alt="" class="img-responsive" src="../images/linear.png" title="linear"/></p>
@@ -228,18 +228,20 @@ ansible有类似dockerhub的东东:ansible-galaxy ,你可以安装某人发布�
 <li>free :即每个主机的执行过程是连续的,不存在等待的情况</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="x">- hosts: "</span><span class="cp">{{</span><span class="nv">hosts</span><span class="cp">}}</span><span class="x">"</span>
-<span class="x">  gather\_facts: yes</span>
+<span class="x">  gather_facts: yes</span>
 <span class="x">  strategy: free</span>
 <span class="x">  tasks:</span>
 <span class="x">    - name: sleep</span>
 <span class="x">      shell: sleep "</span><span class="cp">{{</span><span class="m">10</span><span class="o">|</span><span class="nf">random</span><span class="cp">}}</span><span class="x">";</span>
 <span class="x">    - name: debug</span>
-<span class="x">      debug: var=ansible\_kernel</span>
+<span class="x">      debug: var=ansible_kernel</span>
 </pre></div>
 <p>执行结果:
 <img alt="" class="img-responsive" src="../images/free.png" title="linear"/></p>
 <ul>
-<li>debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后 …</li></ul></body></html>
+<li>debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后，继续执行，如：</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="x">- hosts: test …</span></pre></div></body></html>
                     <a class="btn btn-default btn-xs" href="/ansible-kuai-su-shang-shou-strategy.html">more ...</a>
                 </div>
             </article>

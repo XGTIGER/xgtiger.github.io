@@ -12,13 +12,13 @@
 <link rel="canonical" href="/ansible-kuai-su-shang-shou-strategy.html">
 
         <meta name="author" content="wyk" />
-        <meta name="description" content="strategy 表明每个task在hosts中执行的相对顺序 主要有三种执行策略: linear 线性:每个task的执行在全部主机执行完成时再执行下一个 - hosts: &#34;{{hosts}}&#34; gather\_facts: yes strategy: linear tasks: - name: debug debug: var=ansible\_kernel 执行结果: free :即每个主机的执行过程是连续的,不存在等待的情况 - hosts: &#34;{{hosts}}&#34; gather\_facts: yes strategy: free tasks: - name: sleep shell: sleep &#34;{{10|random}}&#34;; - name: debug debug: var=ansible\_kernel 执行结果: debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后 …" />
+        <meta name="description" content="strategy 表明每个task在hosts中执行的相对顺序 主要有三种执行策略: linear 线性:每个task的执行在全部主机执行完成时再执行下一个 - hosts: &#34;{{hosts}}&#34; gather_facts: yes strategy: linear tasks: - name: debug debug: var=ansible_kernel 执行结果: free :即每个主机的执行过程是连续的,不存在等待的情况 - hosts: &#34;{{hosts}}&#34; gather_facts: yes strategy: free tasks: - name: sleep shell: sleep &#34;{{10|random}}&#34;; - name: debug debug: var=ansible_kernel 执行结果: debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后，继续执行，如： - hosts: test …" />
 
         <meta property="og:site_name" content="XGTIGER's Notes" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="ansible 快速上手--strategy"/>
         <meta property="og:url" content="/ansible-kuai-su-shang-shou-strategy.html"/>
-        <meta property="og:description" content="strategy 表明每个task在hosts中执行的相对顺序 主要有三种执行策略: linear 线性:每个task的执行在全部主机执行完成时再执行下一个 - hosts: &#34;{{hosts}}&#34; gather\_facts: yes strategy: linear tasks: - name: debug debug: var=ansible\_kernel 执行结果: free :即每个主机的执行过程是连续的,不存在等待的情况 - hosts: &#34;{{hosts}}&#34; gather\_facts: yes strategy: free tasks: - name: sleep shell: sleep &#34;{{10|random}}&#34;; - name: debug debug: var=ansible\_kernel 执行结果: debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后 …"/>
+        <meta property="og:description" content="strategy 表明每个task在hosts中执行的相对顺序 主要有三种执行策略: linear 线性:每个task的执行在全部主机执行完成时再执行下一个 - hosts: &#34;{{hosts}}&#34; gather_facts: yes strategy: linear tasks: - name: debug debug: var=ansible_kernel 执行结果: free :即每个主机的执行过程是连续的,不存在等待的情况 - hosts: &#34;{{hosts}}&#34; gather_facts: yes strategy: free tasks: - name: sleep shell: sleep &#34;{{10|random}}&#34;; - name: debug debug: var=ansible_kernel 执行结果: debug strategy:允许进入交互式（另外--step可以交互式执行tasks)，修正了相关问题后，继续执行，如： - hosts: test …"/>
         <meta property="article:published_time" content="2015-03-18" />
             <meta property="article:section" content="Ansible" />
             <meta property="article:author" content="wyk" />
@@ -106,11 +106,11 @@ XGTIGER's Notes            </a>
 <li>linear 线性:每个task的执行在全部主机执行完成时再执行下一个</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="x">- hosts: "</span><span class="cp">{{</span><span class="nv">hosts</span><span class="cp">}}</span><span class="x">"</span>
-<span class="x">  gather\_facts: yes</span>
+<span class="x">  gather_facts: yes</span>
 <span class="x">  strategy: linear</span>
 <span class="x">  tasks:</span>
 <span class="x">    - name: debug</span>
-<span class="x">      debug: var=ansible\_kernel</span>
+<span class="x">      debug: var=ansible_kernel</span>
 </pre></div>
 <p>执行结果:
 <img alt="" class="img-responsive" src="../images/linear.png" title="linear"/></p>
@@ -118,13 +118,13 @@ XGTIGER's Notes            </a>
 <li>free :即每个主机的执行过程是连续的,不存在等待的情况</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="x">- hosts: "</span><span class="cp">{{</span><span class="nv">hosts</span><span class="cp">}}</span><span class="x">"</span>
-<span class="x">  gather\_facts: yes</span>
+<span class="x">  gather_facts: yes</span>
 <span class="x">  strategy: free</span>
 <span class="x">  tasks:</span>
 <span class="x">    - name: sleep</span>
 <span class="x">      shell: sleep "</span><span class="cp">{{</span><span class="m">10</span><span class="o">|</span><span class="nf">random</span><span class="cp">}}</span><span class="x">";</span>
 <span class="x">    - name: debug</span>
-<span class="x">      debug: var=ansible\_kernel</span>
+<span class="x">      debug: var=ansible_kernel</span>
 </pre></div>
 <p>执行结果:
 <img alt="" class="img-responsive" src="../images/free.png" title="linear"/></p>
@@ -133,12 +133,12 @@ XGTIGER's Notes            </a>
 </ul>
 <div class="highlight"><pre><span></span><span class="x">- hosts: test</span>
 <span class="x">  strategy: debug</span>
-<span class="x">  gather\_facts: no</span>
+<span class="x">  gather_facts: no</span>
 <span class="x">  vars:</span>
 <span class="x">    var1: value1</span>
 <span class="x">  tasks:</span>
 <span class="x">    - name: wrong variable</span>
-<span class="x">      ping: data=</span><span class="cp">{{</span> <span class="nv">wrong</span><span class="err">\</span><span class="nv">_var</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">      ping: data=</span><span class="cp">{{</span> <span class="nv">wrong_var</span> <span class="cp">}}</span><span class="x"></span>
 </pre></div>
 <p>允许的命令：
 p task/vars/host/result</p>
