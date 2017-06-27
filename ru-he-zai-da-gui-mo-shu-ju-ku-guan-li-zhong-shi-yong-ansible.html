@@ -386,9 +386,9 @@ XGTIGER's Notes            </a>
 <li>启动mysql服务</li>
 <li>清理匿名用户</li>
 <li>为root用户设置密码</li>
-<li>使用服务开机启动</li>
+<li>使服务开机启动</li>
 </ul>
-<p>当然可以做的更详细,这里仅为了演示.</p>
+<p>当然可以做的更详细,这里为了演示.</p>
 <div class="highlight"><pre><span></span><span class="x"># init a mysql instance</span>
 <span class="x">---</span>
 
@@ -462,7 +462,7 @@ XGTIGER's Notes            </a>
 </pre></div>
 <p>如果没有异常的出现,所有目标主机将达到一致的状态.</p>
 <h1 id="zi-ding-yi-de-zhi-xing-mo-kuai">自定义的执行模块</h1>
-<p>前文说到ansible是全面支持插件系统的,如模块、callback、connections、loopup等等.ANSIBLE自带的模块虽然已经非常强大,但有时仍不能覆盖某些场景,比如我就想实现在数据库的查询,这里我实现了一个简单的执行Module,由于并未全面对mysql的各种语句作过测试,所以使用场景目前还是有限.
+<p>前文说到ansible是全面支持插件系统的,如模块、callback、connections、lookup等等.ANSIBLE自带的模块虽然已经非常强大,但有时仍不能覆盖某些场景,比如我就想实现在数据库的查询,这里我实现了一个简单的执行Module,由于并未全面对mysql的各种语句作过测试,所以使用场景目前还是有限.
 先看下文档:</p>
 <div class="highlight"><pre><span></span>&gt; MYSQL_EXECUTE
 
@@ -525,7 +525,7 @@ Notes:  Execute a query on mysql server.For some dml,generally must be executed 
 
 Requirements:  MySQLdb
 </pre></div>
-<p>类似基本mysql_user模块,这里我设定了两个有用的参数</p>
+<p>这里我设定了两个有用的参数</p>
 <ul>
 <li>auto_get_master: 自动找到复制集群的主库</li>
 <li>execute_on_master :需要在主库上才能招行,防止破坏集群的正常复制.
@@ -544,7 +544,7 @@ Requirements:  MySQLdb
 <h1 id="guan-yu-zhi-xing-xiao-lu">关于执行效率</h1>
 <p>据我的经验,如修改用户授权开30个并发对10000+实例的进行操作,基本能在20分钟内完成,操作效率相对还是很高的,对较小规模的集群可以做到"分分钟"搞定.</p>
 <h1 id="zong-jie">总结</h1>
-<p>Ansible带来了一种简洁、高效、灵活的方式来完成如果使用传统方式通常比较复杂(也意味着更多的出错机会)的工作，很多场景确实有事半功倍效果。
+<p>Ansible带来了一种简洁、高效、灵活的方式来完成那些如果使用传统方式通常比较复杂(也意味着更多的出错机会)的工作，很多场景确实有事半功倍效果。
 通过这些经验案例,希望能抛砖引玉,大家再举一反三。</p></body></html>
             </div>
             <!-- /.entry-content -->
