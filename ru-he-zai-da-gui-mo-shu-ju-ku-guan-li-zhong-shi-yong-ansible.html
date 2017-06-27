@@ -535,7 +535,7 @@ Requirements:  MySQLdb
 <p>这里我设定了两个有用的参数</p>
 <ul>
 <li>auto_get_master: 自动找到复制集群的主库</li>
-<li>execute_on_master :需要在主库上才能招行,防止破坏集群的正常复制.
+<li>execute_on_master :语句仅允许在主库上被执行,目的是防止破坏集群的正常复制.
 使用范例:</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="x">    mysql_execute:</span>
