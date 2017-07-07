@@ -195,6 +195,7 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
 <li><strong>agentless</strong>模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。</li>
 <li>幂等性：不会重复执行相同的指令。例如不会重复安装软件</li>
 <li>期望状态：只需要告诉被监控端的期望状态。</li>
+<li>被控机要求：Python 2.6 or later，SSH Server.</li>
 </ul>
 <h3 id="an-zhuang">安装</h3>
 <p><code>pip install ansible</code></p>
@@ -207,12 +208,7 @@ yaml类似python语言，有严格的缩进要求，一般是两个空格作为�
 10.10.2.6     ansible_ssh_user=root 
 10.10.0.11     ansible_ssh_user=root 
 [others]
-other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
-</pre></div>
-<ul>
-<li>使用pattern</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="k">[webservers …</span></pre></div></body></html>
+other1 …</pre></div></body></html>
                     <a class="btn btn-default btn-xs" href="/ansible-ji-ben-shi-yong.html">more ...</a>
                 </div>
             </article>
@@ -239,10 +235,10 @@ other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
   <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
   <ul class="list-group " id="tags">
     <li class="list-group-item tag-1">
-      <a href="/tag/ansible.html">ansible</a>
+      <a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
     </li>
     <li class="list-group-item tag-1">
-      <a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
+      <a href="/tag/ansible.html">ansible</a>
     </li>
     <li class="list-group-item tag-10">
       <a href="/tag/mysql.html">mysql</a>

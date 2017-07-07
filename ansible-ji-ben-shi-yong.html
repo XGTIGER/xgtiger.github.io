@@ -13,13 +13,13 @@
 
         <meta name="author" content="wyk" />
         <meta name="keywords" content="ansible,ansible快速上手" />
-        <meta name="description" content="简介 ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点： agentless模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。 幂等性：不会重复执行相同的指令。例如不会重复安装软件 期望状态：只需要告诉被监控端的期望状态。 安装 pip install ansible 定义Host Inventory（主机清单） vim /etc/ansible/hosts，有以下几种可用形式: 带附属属性 [testgroup] 10.10.2.6 ansible_ssh_user=root 10.10.0.11 ansible_ssh_user=root [others] other1.example.com ansible_connection=ssh ansible_ssh_user=mpdehaan 使用pattern [webservers …" />
+        <meta name="description" content="简介 ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点： agentless模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。 幂等性：不会重复执行相同的指令。例如不会重复安装软件 期望状态：只需要告诉被监控端的期望状态。 被控机要求：Python 2.6 or later，SSH Server. 安装 pip install ansible 定义Host Inventory（主机清单） vim /etc/ansible/hosts，有以下几种可用形式: 带附属属性 [testgroup] 10.10.2.6 ansible_ssh_user=root 10.10.0.11 ansible_ssh_user=root [others] other1 …" />
 
         <meta property="og:site_name" content="XGTIGER's Notes" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="ansible 基本使用"/>
         <meta property="og:url" content="/ansible-ji-ben-shi-yong.html"/>
-        <meta property="og:description" content="简介 ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点： agentless模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。 幂等性：不会重复执行相同的指令。例如不会重复安装软件 期望状态：只需要告诉被监控端的期望状态。 安装 pip install ansible 定义Host Inventory（主机清单） vim /etc/ansible/hosts，有以下几种可用形式: 带附属属性 [testgroup] 10.10.2.6 ansible_ssh_user=root 10.10.0.11 ansible_ssh_user=root [others] other1.example.com ansible_connection=ssh ansible_ssh_user=mpdehaan 使用pattern [webservers …"/>
+        <meta property="og:description" content="简介 ansible是新出现的运维工具是基于Python研发的糅合了众多老牌运维工具的优点实现了批量操作系统配置、批量程序的部署、批量运行命令等功能。具有以下特点： agentless模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。 幂等性：不会重复执行相同的指令。例如不会重复安装软件 期望状态：只需要告诉被监控端的期望状态。 被控机要求：Python 2.6 or later，SSH Server. 安装 pip install ansible 定义Host Inventory（主机清单） vim /etc/ansible/hosts，有以下几种可用形式: 带附属属性 [testgroup] 10.10.2.6 ansible_ssh_user=root 10.10.0.11 ansible_ssh_user=root [others] other1 …"/>
         <meta property="article:published_time" content="2014-11-28" />
             <meta property="article:section" content="Ansible" />
             <meta property="article:tag" content="ansible" />
@@ -113,6 +113,7 @@ XGTIGER's Notes            </a>
 <li><strong>agentless</strong>模式：基于ssh服务实现工作在被监控端。监控端是ssh的客户端。</li>
 <li>幂等性：不会重复执行相同的指令。例如不会重复安装软件</li>
 <li>期望状态：只需要告诉被监控端的期望状态。</li>
+<li>被控机要求：Python 2.6 or later，SSH Server.</li>
 </ul>
 <h3 id="an-zhuang">安装</h3>
 <p><code>pip install ansible</code></p>
@@ -286,11 +287,11 @@ ansible all -B 1800 -P 60 -a "/usr/bin/long_running_operation --do-stuff" #最�
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="/ansible-kuai-su-shang-shou-prompts.html">ansible 快速上手--Prompts</a></li>
         <li><a href="/ansible-kuai-su-shang-shou-strategy.html">ansible 快速上手--strategy</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-prompts.html">ansible 快速上手--Prompts</a></li>
         <li><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></li>
         <li><a href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html">ansible 快速上手--yaml语法简介</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></li>
     </ul>
 </section>
 <!-- JiaThis Button BEGIN -->
@@ -328,10 +329,10 @@ var jiathis_config = {data_track_clickback:'true'};
   <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
   <ul class="list-group " id="tags">
     <li class="list-group-item tag-1">
-      <a href="/tag/ansible.html">ansible</a>
+      <a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
     </li>
     <li class="list-group-item tag-1">
-      <a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
+      <a href="/tag/ansible.html">ansible</a>
     </li>
     <li class="list-group-item tag-10">
       <a href="/tag/mysql.html">mysql</a>

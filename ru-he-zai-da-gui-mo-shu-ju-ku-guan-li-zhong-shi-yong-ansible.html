@@ -13,13 +13,13 @@
 
         <meta name="author" content="wyk" />
         <meta name="keywords" content="ansible,mysql" />
-        <meta name="description" content="简介 Ansible ,现在不只是一个配置管理和应用部署工具，2.2版本更是增加了对编排的支持,2.0版本经过了代码的完全重构，全面支持可扩展的插件系统，便于使用者通过实现各种功能插件来满足自己的需求。Ansible 的作者Michael DeHaan 同时也是知名软件 Cobbler 与 Func 的作者。 Ansible的模块设计,遵循幂等性的原则,在使用playbook的过程中，你将更清晰的体会到这一特点。 Ansible 的常被用于如下（但不限于）几个场景： 自动化部署应用 自动化配置管理 自动化的持续交付 同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless，即 Ansible 没有类似saltstack的agent部署需求，相对灵活简便;缺点也存在，比如执行响应的开销相对大.其实没那么明显，与您常用的ssh指令相当 …" />
+        <meta name="description" content="简介 Ansible ,现在不只是一个配置管理和应用部署工具，2.2版本更是增加了对编排的支持,2.0版本经过了代码的完全重构，全面支持可扩展的插件系统，便于使用者通过实现各种功能插件来满足自己的需求。Ansible 的作者Michael DeHaan 同时也是知名软件 Cobbler 与 Func 的作者。 Ansible的模块设计,遵循幂等性的原则,在使用playbook的过程中，你将更清晰的体会到这一特点。 Ansible 的常被用于如下（但不限于）几个场景： 自动化部署应用 自动化配置管理 自动化的持续交付 同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless(被控机要求Python 2.6 or later，SSH Server)，即 …" />
 
         <meta property="og:site_name" content="XGTIGER's Notes" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="如何在大规模数据库管理中使用ANSIBLE"/>
         <meta property="og:url" content="/ru-he-zai-da-gui-mo-shu-ju-ku-guan-li-zhong-shi-yong-ansible.html"/>
-        <meta property="og:description" content="简介 Ansible ,现在不只是一个配置管理和应用部署工具，2.2版本更是增加了对编排的支持,2.0版本经过了代码的完全重构，全面支持可扩展的插件系统，便于使用者通过实现各种功能插件来满足自己的需求。Ansible 的作者Michael DeHaan 同时也是知名软件 Cobbler 与 Func 的作者。 Ansible的模块设计,遵循幂等性的原则,在使用playbook的过程中，你将更清晰的体会到这一特点。 Ansible 的常被用于如下（但不限于）几个场景： 自动化部署应用 自动化配置管理 自动化的持续交付 同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless，即 Ansible 没有类似saltstack的agent部署需求，相对灵活简便;缺点也存在，比如执行响应的开销相对大.其实没那么明显，与您常用的ssh指令相当 …"/>
+        <meta property="og:description" content="简介 Ansible ,现在不只是一个配置管理和应用部署工具，2.2版本更是增加了对编排的支持,2.0版本经过了代码的完全重构，全面支持可扩展的插件系统，便于使用者通过实现各种功能插件来满足自己的需求。Ansible 的作者Michael DeHaan 同时也是知名软件 Cobbler 与 Func 的作者。 Ansible的模块设计,遵循幂等性的原则,在使用playbook的过程中，你将更清晰的体会到这一特点。 Ansible 的常被用于如下（但不限于）几个场景： 自动化部署应用 自动化配置管理 自动化的持续交付 同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless(被控机要求Python 2.6 or later，SSH Server)，即 …"/>
         <meta property="article:published_time" content="2017-06-24" />
             <meta property="article:section" content="Ansible" />
             <meta property="article:tag" content="ansible" />
@@ -122,7 +122,7 @@ XGTIGER's Notes            </a>
 <p>自动化的持续交付</p>
 </li>
 </ul>
-<p>同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless，即 Ansible 没有类似saltstack的agent部署需求，相对灵活简便;缺点也存在，比如执行响应的开销相对大.其实没那么明显，与您常用的ssh指令相当，而且Ansible可使用扩展(如ZeroMQ）来提升执行效率。</p>
+<p>同类的框架工具有老牌的Chef,Puppet,Saltstack等，Ansible 默认通过 SSH 协议（可扩展，比如DOCKER的连接器），能做到agentless(被控机要求Python 2.6 or later，SSH Server)，即 Ansible 没有类似saltstack的agent部署需求，相对灵活简便;缺点也存在，比如执行响应的开销相对大.其实没那么明显，与您常用的ssh指令相当，而且Ansible可使用扩展(如ZeroMQ）来提升执行效率。</p>
 <p>同类工具系统简单的对比：</p>
 <table class=" table-striped table table-hover">
 <thead>
@@ -555,11 +555,11 @@ Requirements:  MySQLdb
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="/ansible-kuai-su-shang-shou-prompts.html">ansible 快速上手--Prompts</a></li>
         <li><a href="/ansible-kuai-su-shang-shou-strategy.html">ansible 快速上手--strategy</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-prompts.html">ansible 快速上手--Prompts</a></li>
         <li><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></li>
         <li><a href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html">ansible 快速上手--yaml语法简介</a></li>
+        <li><a href="/ansible-ji-ben-shi-yong.html">ansible 基本使用</a></li>
     </ul>
 </section>
 <!-- JiaThis Button BEGIN -->
@@ -597,10 +597,10 @@ var jiathis_config = {data_track_clickback:'true'};
   <a href="/tags.html"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
   <ul class="list-group " id="tags">
     <li class="list-group-item tag-1">
-      <a href="/tag/ansible.html">ansible</a>
+      <a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
     </li>
     <li class="list-group-item tag-1">
-      <a href="/tag/ansiblekuai-su-shang-shou.html">ansible快速上手</a>
+      <a href="/tag/ansible.html">ansible</a>
     </li>
     <li class="list-group-item tag-10">
       <a href="/tag/mysql.html">mysql</a>
