@@ -467,7 +467,7 @@ XGTIGER's Notes            </a>
 <p>如果没有异常的出现,所有目标主机将达到一致的状态.</p>
 <h3 id="zi-ding-yi-de-zhi-xing-mo-kuai">自定义的执行模块</h3>
 <p>前文说到ansible是全面支持插件系统的,如模块、callback、connections、lookup等等.ANSIBLE自带的模块虽然已经非常强大,但有时仍不能覆盖某些场景,比如我就想实现在数据库的查询,这里我实现了一个简单的执行Module,由于并未全面对mysql的各种语句作过测试,所以使用场景目前还是有限.
-先看下文档:</p>
+看下文档:</p>
 <div class="highlight"><pre><span></span>&gt; MYSQL_EXECUTE
 
   execute a SQL query in MySQL  database.
@@ -544,9 +544,8 @@ Requirements:  MySQLdb
 <span class="x">        execute_on_master: yes</span>
 <span class="x">        auto_get_master: yes</span>
 </pre></div>
-<p>如果有兴趣研究源码请到这里</p>
 <h3 id="zhi-xing-xiao-lu">执行效率</h3>
-<p>据我的经验,如修改用户授权开30个并发对10000+实例的进行操作,基本能在20分钟内完成,操作效率相对还是很高的,对较小规模的集群可以做到"分分钟"搞定.</p>
+<p>据我的经验,修改用户授权这类操作,开30个并发对10000+实例的进行操作,基本能在20分钟内完成,操作效率不错,毕竟如此量级的集群不太多;对较小规模的集群可以做到"分分钟"搞定.</p>
 <h3 id="zong-jie">总结</h3>
 <p>Ansible带来了一种简洁、高效、灵活的方式来完成那些如果使用传统方式通常比较复杂(也意味着更多的出错机会)的工作，很多场景确实有事半功倍效果。
 通过这些经验案例,希望能抛砖引玉,大家再举一反三,欢迎与我讨论。</p></body></html>
@@ -555,11 +554,11 @@ Requirements:  MySQLdb
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="/ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></li>
-        <li><a href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html">ansible快速上手--开始使用playbook</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou.html">ansible 快速上手</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html">ansible 快速上手--yaml语法简介</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-dynamic-inventory.html">ansible 快速上手--dynamic inventory</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-strategy.html">ansible 快速上手--strategy</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-loops.html">ansible 快速上手--loops</a></li>
         <li><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-prompts.html">ansible 快速上手--Prompts</a></li>
     </ul>
 </section>
 <!-- JiaThis Button BEGIN -->
