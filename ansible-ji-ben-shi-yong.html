@@ -132,9 +132,9 @@ other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
 <li>使用pattern</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="k">[webservers]</span>
-<span class="err">www[01:50].example.com</span>
+<span class="na">www[01:50].example.com</span>
 <span class="k">[databases]</span>
-<span class="err">db-[a:f].example.com</span>
+<span class="na">db-[a:f].example.com</span>
 </pre></div>
 <ul>
 <li>针对group的vars</li>
@@ -142,9 +142,9 @@ other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
 <div class="highlight"><pre><span></span><span class="k">[atlanta]</span>
 <span class="na">host1 http_port</span><span class="o">=</span><span class="s">80 maxRequestsPerChild=808 #host variables ,用在 playbooks.</span>
 <span class="k">[atlanta]</span>
-<span class="err">host1</span>
-<span class="err">host2</span>
-<span class="err">[atlanta:vars]</span>  
+<span class="na">host1</span>
+<span class="na">host2</span>
+<span class="na">[atlanta:vars]  </span>
 <span class="na">ntp_server</span><span class="o">=</span><span class="s">ntp.atlanta.example.com</span>
 <span class="na">proxy</span><span class="o">=</span><span class="s">proxy.atlanta.example.com</span>
 </pre></div>
@@ -152,24 +152,24 @@ other1.example.com     ansible_connection=ssh        ansible_ssh_user=mpdehaan
 <li>更大的组 ，组vars</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="k">[atlanta]</span>
-<span class="err">host1</span>
-<span class="err">host2</span>
+<span class="na">host1</span>
+<span class="na">host2</span>
 <span class="k">[raleigh]</span>
-<span class="err">host2</span>
-<span class="err">host3</span>
+<span class="na">host2</span>
+<span class="na">host3</span>
 <span class="k">[southeast:children]</span>
-<span class="err">atlanta</span>
-<span class="err">raleigh</span>
+<span class="na">atlanta</span>
+<span class="na">raleigh</span>
 <span class="k">[southeast:vars]</span>
 <span class="na">some_server</span><span class="o">=</span><span class="s">foo.southeast.example.com</span>
 <span class="na">halon_system_timeout</span><span class="o">=</span><span class="s">30</span>
 <span class="na">self_destruct_countdown</span><span class="o">=</span><span class="s">60</span>
 <span class="na">escape_pods</span><span class="o">=</span><span class="s">2</span>
 <span class="k">[usa:children]</span>
-<span class="err">southeast</span>
-<span class="err">northeast</span>
-<span class="err">southwest</span>
-<span class="err">northwest</span>
+<span class="na">southeast</span>
+<span class="na">northeast</span>
+<span class="na">southwest</span>
+<span class="na">northwest</span>
 </pre></div>
 <ul>
 <li>附可用属性列表</li>
@@ -288,10 +288,10 @@ ansible all -B 1800 -P 60 -a "/usr/bin/long_running_operation --do-stuff" #最�
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="/ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou-strategy.html">ansible 快速上手--strategy</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou-dynamic-inventory.html">ansible 快速上手--dynamic inventory</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></li>
+        <li><a href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html">ansible快速上手--开始使用playbook</a></li>
         <li><a href="/ansible-kuai-su-shang-shou.html">ansible 快速上手</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html">ansible 快速上手--yaml语法简介</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></li>
     </ul>
 </section>
 <!-- JiaThis Button BEGIN -->

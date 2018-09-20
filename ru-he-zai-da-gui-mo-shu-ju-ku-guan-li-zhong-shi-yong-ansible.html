@@ -182,8 +182,8 @@ XGTIGER's Notes            </a>
 <p>本文通过若干范例,介绍下如何在大规模的数据库集群管理中使用Ansible.现在只需要将 Ansible部署于一台管理节点（在Docker上运行是没问题的，官方<a href="https://hub.docker.com/r/ansible/ansible/">镜像</a> )，便可开始Ansible探索之旅 。</p>
 <h3 id="zhong-yao-gai-nian">重要概念</h3>
 <ul>
-<li><a href="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a>:即Ansible使用的主机清单。如还没有概念,可参考我的另一篇<a href="http://www.zuodba.com/ansible-ji-ben-shi-yong.html">《基本使用》</a>来快速熟悉下.</li>
-<li><a href="http://docs.ansible.com/ansible/playbooks.html">Playbook</a> :ansible的主要工作形式,可参考我的几篇<a href="http://www.zuodba.com/ansible-kuai-su-shang-shou.html">《Playbook简介》</a>快速熟悉下.</li>
+<li><a href="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a>:即Ansible使用的主机清单。如还没有概念,可参考我的另一篇<a href="http://http://blog.xgtiger.com/ansible-ji-ben-shi-yong.html">《基本使用》</a>来快速熟悉下.</li>
+<li><a href="http://docs.ansible.com/ansible/playbooks.html">Playbook</a> :ansible的主要工作形式,可参考我的几篇<a href="http://http://blog.xgtiger.com/ansible-kuai-su-shang-shou.html">《Playbook简介》</a>快速熟悉下.</li>
 <li><a href="http://docs.ansible.com/ansible/modules.html">Module</a> :ansible的功能基本单元,数量一直在不断增长,目前官方收入的均由python语言编写,但其实可由任何语言完成.所有的模块列表请见<a href="http://docs.ansible.com/ansible/list_of_all_modules.html">这里</a>.</li>
 </ul>
 <h3 id="ji-ben-de-mysqlguan-li-mo-kuai">基本的MYSQL管理模块</h3>
@@ -309,7 +309,7 @@ XGTIGER's Notes            </a>
     login_port: 3308
 </pre></div>
 <h3 id="bian-xie-rolehe-playbookshi-xian-zi-ding-yi-gong-neng">编写role和playbook实现自定义功能</h3>
-<p>playbook和role才是使用ansible的正确姿势，参考<a href="http://www.zuodba.com/ansible-kuai-su-shang-shou-role.html">Role的使用</a>
+<p>playbook和role才是使用ansible的正确姿势，参考<a href="http://http://blog.xgtiger.com/ansible-kuai-su-shang-shou-role.html">Role的使用</a>
 这里通过编写一个role来完成一个通用的mysql的部署功能:
 目录结构如下:</p>
 <div class="highlight"><pre><span></span>mysql_install
@@ -556,10 +556,10 @@ Requirements:  MySQLdb
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="/ansible-kuai-su-shang-shou-conditionals.html">ansible 快速上手--Conditionals</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou-strategy.html">ansible 快速上手--strategy</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou-dynamic-inventory.html">ansible 快速上手--dynamic inventory</a></li>
-        <li><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></li>
+        <li><a href="/ansiblekuai-su-shang-shou-kai-shi-shi-yong-playbook.html">ansible快速上手--开始使用playbook</a></li>
         <li><a href="/ansible-kuai-su-shang-shou.html">ansible 快速上手</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-yamlyu-fa-jian-jie.html">ansible 快速上手--yaml语法简介</a></li>
+        <li><a href="/ansible-kuai-su-shang-shou-role.html">ansible 快速上手--role</a></li>
     </ul>
 </section>
 <!-- JiaThis Button BEGIN -->
